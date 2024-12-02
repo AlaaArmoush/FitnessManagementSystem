@@ -46,7 +46,9 @@ public class AdminUserManagementSteps {
 
 	@When("I update the users account details")
 	public void i_update_the_users_account_details() {
-		boolean updated = UserDataBase.addUser("Mohie Halawa", "7654321", "Client");
+		// Creating a new user object with updated details
+		User updatedUser = new User("Mohie Halawa", "7654321", "Client", "Activated");
+		boolean updated = UserDataBase.updateUserDetails(updatedUser); // Call the update method
 		assertTrue("Test failed: User account not updated.", updated);
 	}
 

@@ -13,40 +13,63 @@ public class UserDataBase {
 		usersList.add(testAdmin);
 	}
 
-	public static boolean addUser(User user) {
-		// Check if the user already exists by ID
+	public static boolean updateUserDetails(User user) {
+		// Loop through the users list to find the matching user by ID
 		for (User u : usersList) {
 			if (u.getID().equals(user.getID())) {
-				u.setName(user.getName());
-				u.setRole(user.getRole());
-				// note when "updating" we only change name/role not status
-				System.out.println("User details updated: " + u);
-				return true;
+				boolean updated = false;
+
+				// Update details only if there's a change
+				if (!u.getName().equals(user.getName())) {
+					u.setName(user.getName());
+					updated = true;
+				}
+
+				if (!u.getRole().equals(user.getRole())) {
+					u.setRole(user.getRole());
+					updated = true;
+				}
+
+				if (!u.getStatus().equals(user.getStatus())) {
+					u.setStatus(user.getStatus());
+					updated = true;
+				}
+
+				// Log the update if there were any changes
+				if (updated) {
+					System.out.println("User details updated: " + u);
+				}
+				return true; // User found and updated
 			}
 		}
 
+		return false; // User not found
+	}
+
+	public static boolean addUser(User user) {
 		// If user does not exist, add a new user
+		for (User u : usersList) {
+			if (u.getID().equals(user.getID())) {
+				return false; // User already exists
+			}
+		}
 		usersList.add(user);
 		System.out.println("New user added: " + user);
 		return true;
 	}
 
-	// Second method: Takes name, id, and role as string arguments
 	public static boolean addUser(String name, String id, String role) {
 		// Check if the user already exists by ID
 		for (User u : usersList) {
 			if (u.getID().equals(id)) {
-				// If the user exists, update the details
-				u.setName(name);
-				u.setRole(role);
-				// Note: status is not updated here, it remains the same
-				System.out.println("User details updated: " + u);
-				return true;
+				// Use the dedicated update method
+				User updatedUser = new User(name, id, role, "Activated");
+				return updateUserDetails(updatedUser);
 			}
 		}
 
-		// If user does not exist, create a new user and add to the list
-		User newUser = new User(name, id, role, "Activated"); // Default status as "Activated"
+		// If user does not exist, create and add a new user
+		User newUser = new User(name, id, role, "Activated");
 		usersList.add(newUser);
 		System.out.println("New user added: " + newUser);
 		return true;
