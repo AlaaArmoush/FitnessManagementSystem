@@ -78,7 +78,7 @@ public class Admin_User_Management_Test {
 
 	@Then("the account status should be updated to {string}")
 	public void the_account_status_should_be_updated_to(String string) {
-		String expected = "Deactivated";
+		String expected = string;
 		assertEquals("Test failed: Name not updated correctly.", expected, UserDataBase.getUser("2342004").getStatus());
 		System.out.println("User account successfully deactivated: " + UserDataBase.getUser("2342004"));
 
@@ -98,10 +98,10 @@ public class Admin_User_Management_Test {
 		System.out.println("Instructor request approved and account activated.");
 	}
 
-	@Then("the instructor account should be activated")
-	public void the_instructor_account_should_be_activated() {
+	@Then("the instructor account should be {string}")
+	public void the_instructor_account_should_be_activated(String string) {
 		String status = UserDataBase.getUser("1234567").getStatus();
-		assertTrue("Test failed: Instructor account not activated.", (status == "Activated"));
+		assertTrue("Test failed: Instructor account not activated.", status.equals(string));
 		System.out.println("Instructor account status: " + UserDataBase.getUser("1234567").getStatus());
 	}
 

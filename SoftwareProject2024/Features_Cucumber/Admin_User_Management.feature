@@ -18,13 +18,13 @@ Feature: User Management in Fitness Management System
     Given I am logged in as an admin
     And a user account exists
     When I deactivate the users account
-    Then the account status should be updated to "deactivated"
+    Then the account status should be updated to "Deactivated"
 
   Scenario: Approve new instructor registrations
     Given I am logged in as an admin
     And there are pending instructor registration requests
     When I approve a request
-    Then the instructor account should be activated
+    Then the instructor account should be "Activated"
 
   Scenario: Monitor user activity statistics
     Given I am logged in as an admin
