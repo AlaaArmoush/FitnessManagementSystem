@@ -50,7 +50,7 @@ public class UserDataBase {
 		// If user does not exist, add a new user
 		for (User u : usersList) {
 			if (u.getID().equals(user.getID())) {
-				return false; // User already exists
+				return true;
 			}
 		}
 		usersList.add(user);
@@ -62,9 +62,8 @@ public class UserDataBase {
 		// Check if the user already exists by ID
 		for (User u : usersList) {
 			if (u.getID().equals(id)) {
-				// Use the dedicated update method
-				User updatedUser = new User(name, id, role, "Activated");
-				return updateUserDetails(updatedUser);
+
+				return true;
 			}
 		}
 
