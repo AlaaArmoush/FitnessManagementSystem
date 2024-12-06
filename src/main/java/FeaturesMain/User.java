@@ -68,7 +68,7 @@ public class User {
 		return "User [name=" + name + ", id=" + id + ", role=" + role + ", status=" + status + "]";
 	}
 
-	public Object getPassword() {
+	public String getPassword() {
 		return password;
 	}
 }
