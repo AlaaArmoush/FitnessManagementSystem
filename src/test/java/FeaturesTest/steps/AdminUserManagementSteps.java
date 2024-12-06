@@ -17,7 +17,9 @@ public class AdminUserManagementSteps {
 
 	@Given("I am logged in as an admin id {string} password {string}")
 	public void i_am_logged_in_as_an_admin_id_password(String id, String password) {
-		boolean loggedIn = UserDataBase.login(id, password);
+		String local_id = id;
+		String local_pass = password;
+		boolean loggedIn = UserDataBase.login(local_id, local_pass);
 		assertTrue("Test failed: Login was not successful.", loggedIn);
 	}
 
@@ -66,8 +68,9 @@ public class AdminUserManagementSteps {
 
 	@Then("the account status should be updated to {string}")
 	public void the_account_status_should_be_updated_to(String expectedStatus) {
+		String expected = expectedStatus;
 		String actualStatus = UserDataBase.getUser("2342004").getStatus();
-		assertEquals("Test failed: Status not updated correctly.", expectedStatus, actualStatus);
+		assertEquals("Test failed: Status not updated correctly.", expected, actualStatus);
 	}
 
 	@Given("there are pending instructor registration requests")
@@ -84,8 +87,9 @@ public class AdminUserManagementSteps {
 
 	@Then("the instructor account should be {string}")
 	public void the_instructor_account_should_be_activated(String expectedStatus) {
+		String expected = expectedStatus;
 		String actualStatus = UserDataBase.getUser("1234567").getStatus();
-		assertEquals("Test failed: Status not updated correctly.", expectedStatus, actualStatus);
+		assertEquals("Test failed: Status not updated correctly.", expected, actualStatus);
 	}
 
 	@When("I view user activity and engagement statistics")
