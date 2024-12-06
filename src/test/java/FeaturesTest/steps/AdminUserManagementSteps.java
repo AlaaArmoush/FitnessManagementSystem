@@ -15,10 +15,8 @@ public class AdminUserManagementSteps {
 		app = new MyApplication();
 	}
 
-	@Given("I am logged in as an admin")
-	public void i_am_logged_in_as_an_admin() {
-		String id = "admin123";
-		String password = "1001";
+	@Given("I am logged in as an admin id {string} password {string}")
+	public void i_am_logged_in_as_an_admin_id_password(String id, String password) {
 		boolean loggedIn = UserDataBase.login(id, password);
 		assertTrue("Test failed: Login was not successful.", loggedIn);
 	}
