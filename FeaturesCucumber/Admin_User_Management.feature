@@ -3,20 +3,21 @@ Feature: User Management in Fitness Management System
   I want to manage user accounts (instructors and clients) and monitor activity,
   So that I can ensure proper functionality and engagement.
 
-	Scenario: Add a new user account id
-	  Given I am logged in as an admin id "admin123" password "1001"
-	  When I add a new user account with valid details
-	  Then the user account should be created successfully
+	Scenario: Add a new user account with specific details
+  Given I am logged in as an admin id "admin123" password "1001"
+  When I add a new user account with name "Alaa Armoush" id "2342004" role "Instructor" status "Activated"
+  Then the user account should be created successfully
 
-  Scenario: Update user account information
+	Scenario: Update user account details with specific information
 	  Given I am logged in as an admin id "admin123" password "1001"
-    And a user account exists
-    When I update the users account details
-    Then the account information should be updated successfully
+	  And a user account exists with name "Mohe lwa" id "7654321" role "Instructor" status "Activated"
+	  When I update the user's account details to name "Mohie Halawa" role "Client"
+	  Then the account information should be updated successfully
+
 
   Scenario: Deactivate a user account
 	  Given I am logged in as an admin id "admin123" password "1001"
-    And a user account exists
+    And a user account exists with name with id "2342004" 
     When I deactivate the users account
     Then the account status should be updated to "Deactivated"
 

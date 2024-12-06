@@ -13,25 +13,25 @@ public class UserDataBase {
 		usersList.add(testAdmin);
 	}
 
-	public static boolean updateUserDetails(User user) {
+	public static boolean updateUserDetails(String name, String id, String role, String status) {
 		// Loop through the users list to find the matching user by ID
 		for (User u : usersList) {
-			if (u.getID().equals(user.getID())) {
+			if (u.getID().equals(id)) {
 				boolean updated = false;
 
 				// Update details only if there's a change
-				if (!u.getName().equals(user.getName())) {
-					u.setName(user.getName());
+				if (!u.getName().equals(name)) {
+					u.setName(name);
 					updated = true;
 				}
 
-				if (!u.getRole().equals(user.getRole())) {
-					u.setRole(user.getRole());
+				if (!u.getRole().equals(role)) {
+					u.setRole(role);
 					updated = true;
 				}
 
-				if (!u.getStatus().equals(user.getStatus())) {
-					u.setStatus(user.getStatus());
+				if (!u.getStatus().equals(status)) {
+					u.setStatus(status);
 					updated = true;
 				}
 
@@ -47,25 +47,16 @@ public class UserDataBase {
 	}
 
 	public static boolean addUser(User user) {
-		// If user does not exist, add a new user
-		for (User u : usersList) {
-			if (u.getID().equals(user.getID())) {
-				return true;
-			}
-		}
+		// check if already exists
+		userExist(user.getID());
 		usersList.add(user);
 		System.out.println("New user added: " + user);
 		return true;
 	}
 
 	public static boolean addUser(String name, String id, String role) {
-		// Check if the user already exists by ID
-		for (User u : usersList) {
-			if (u.getID().equals(id)) {
-
-				return true;
-			}
-		}
+		// check if already exists
+		userExist(id);
 
 		// If user does not exist, create and add a new user
 		User newUser = new User(name, id, role, "Activated");
