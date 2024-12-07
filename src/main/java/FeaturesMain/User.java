@@ -5,21 +5,28 @@ public class User {
 	private String id;
 	private String role;
 	private String status;
+	//
 	private String password;
+	private ClientProfile profile;
 
-	// constructor for backward compatibility (originally i didn't have a password
-	// field)
+	// constructor for backward compatibility (before i added password and profile)
 	public User(String name, String id, String role, String status) {
-		this(name, id, role, status, "default_password");
+		this(name, id, role, status, "default_password", null);
 	}
 
-	// Constructor with password
+	// constructor for backward compatibility (before i added profile)
 	public User(String name, String id, String role, String status, String password) {
+		this(name, id, role, status, password, null);
+	}
+
+	// Constructor with password and profile
+	public User(String name, String id, String role, String status, String password, ClientProfile profile) {
 		this.name = name;
 		this.id = id;
 		this.role = role;
 		this.status = status;
 		this.password = password;
+		this.profile = profile;
 	}
 
 	// Getter for name
@@ -70,5 +77,13 @@ public class User {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public void setProfile(ClientProfile profile) {
+		this.profile = profile;
+	}
+
+	public ClientProfile getProfile() {
+		return profile;
 	}
 }

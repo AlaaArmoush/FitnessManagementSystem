@@ -19,6 +19,7 @@ public class AdminSubsManagementSteps {
 
 	public AdminSubsManagementSteps() {
 		app = new MyApplication();
+
 	}
 
 	@When("I create a subscription plan with tier {string}, price {string}, discount {string}, and days per month {string}")
