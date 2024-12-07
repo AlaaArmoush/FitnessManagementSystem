@@ -31,6 +31,7 @@ public class SubsDataBase {
 	}
 
 	public static boolean updatePlan(String tier, String price, String discount, String days) {
+		System.out.print("Plan details pre-update: " + getPlan(tier) + "\n");
 		for (Subscription s : subsList) {
 			if (s.getTier().equals(tier)) {
 				boolean updated = false;

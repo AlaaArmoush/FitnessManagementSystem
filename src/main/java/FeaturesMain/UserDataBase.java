@@ -11,6 +11,9 @@ public class UserDataBase {
 
 		User testAdmin = new User("Admin Test", "admin123", "Admin", "Activated", "1001");
 		usersList.add(testAdmin);
+
+		User testClient = new User("Client Test", "client123", "Client", "Activated", "2002");
+		usersList.add(testClient);
 	}
 
 	public static boolean updateUserDetails(String name, String id, String role, String status) {
