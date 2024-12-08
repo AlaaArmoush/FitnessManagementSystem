@@ -1,13 +1,20 @@
 package FeaturesMain;
 
+import java.util.ArrayList;
+
 public class User {
 	private String name;
 	private String id;
 	private String role;
 	private String status;
-	//
+	// for login
 	private String password;
+	// for client
 	private ClientProfile profile;
+	private int height;
+	private int weight;
+	private int NumOfPro;
+	private ArrayList<AchievementBadge> earnedBadges;
 
 	// constructor for backward compatibility (before i added password and profile)
 	public User(String name, String id, String role, String status) {
@@ -27,6 +34,17 @@ public class User {
 		this.status = status;
 		this.password = password;
 		this.profile = profile;
+		earnedBadges = new ArrayList<>();
+	}
+
+	public User(String name, String id, String role, String status, String password, int NumOfPro) {
+		this.name = name;
+		this.id = id;
+		this.role = role;
+		this.status = status;
+		this.password = password;
+		this.NumOfPro = NumOfPro;
+		earnedBadges = new ArrayList<>();
 	}
 
 	// Getter for name
@@ -86,4 +104,102 @@ public class User {
 	public ClientProfile getProfile() {
 		return profile;
 	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setHeight(int i) {
+		this.height = i;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public double getBMI() {
+		double h = height / 100.0;
+		double BMI = weight / (h * h);
+		return (int) BMI; // No need to print here
+	}
+
+	public String getBodyStatus() {
+		double BMI = getBMI();
+		if (BMI > 25) {
+			System.out.println("Overweight");
+			return "Overweight";
+		} else if (BMI < 19) {
+			System.out.println("Underweight");
+			return "Underweight";
+		} else {
+			System.out.println("Healthy");
+			return "Healthy";
+		}
+
+	}
+
+	public String getAction() {
+		double h = height / 100.0;
+		double goal = h * h * 25;
+		String a;
+		if (goal > weight) {
+			a = "Gain: " + (int) (goal - weight) + " Kg";
+			System.out.println(a);
+			return a;
+		} else {
+			a = "Lose: " + (int) (weight - goal) + " Kg";
+			System.out.println(a);
+			return a;
+		}
+	}
+
+	public void incNumOfPro() {
+		++NumOfPro;
+		// Add badges only if not already earned
+		if (getNumOfPro() >= 1 && !earnedBadges.contains(AchievementBadge.NEWBIE_CHAMP)) {
+			earnedBadges.add(AchievementBadge.NEWBIE_CHAMP);
+		}
+		if (getNumOfPro() >= 2 && !earnedBadges.contains(AchievementBadge.RISING_STAR)) {
+			earnedBadges.add(AchievementBadge.RISING_STAR);
+		}
+		if (getNumOfPro() >= 3 && !earnedBadges.contains(AchievementBadge.FITNESS_WARRIOR)) {
+			earnedBadges.add(AchievementBadge.FITNESS_WARRIOR);
+		}
+		if (getNumOfPro() >= 4 && !earnedBadges.contains(AchievementBadge.TENACIOUS_TITAN)) {
+			earnedBadges.add(AchievementBadge.TENACIOUS_TITAN);
+		}
+		if (getNumOfPro() >= 5 && !earnedBadges.contains(AchievementBadge.GOAL_CRUSHER)) {
+			earnedBadges.add(AchievementBadge.GOAL_CRUSHER);
+		}
+		if (getNumOfPro() >= 6 && !earnedBadges.contains(AchievementBadge.UNSTOPPABLE_FORCE)) {
+			earnedBadges.add(AchievementBadge.UNSTOPPABLE_FORCE);
+		}
+		if (getNumOfPro() >= 7 && !earnedBadges.contains(AchievementBadge.LEGENDARY_GRIT)) {
+			earnedBadges.add(AchievementBadge.LEGENDARY_GRIT);
+		}
+	}
+
+	public int getNumOfPro() {
+		return NumOfPro;
+	}
+
+	public ArrayList<AchievementBadge> getEarnedBadges() {
+		return earnedBadges;
+	}
+
+	public void showBadges() {
+		if (earnedBadges.isEmpty()) {
+			System.out.println("No badges earned yet.");
+		} else {
+			System.out.println("Badges earned: ");
+			for (AchievementBadge badge : earnedBadges) {
+				System.out.println("- " + badge.getDescription());
+			}
+		}
+	}
+
 }

@@ -14,7 +14,6 @@ import io.cucumber.java.en.When;
 
 public class ClientAccountManagementSteps {
 	MyApplication app;
-	// ClientProfile clientProfile;
 
 	public ClientAccountManagementSteps() {
 		app = new MyApplication();
