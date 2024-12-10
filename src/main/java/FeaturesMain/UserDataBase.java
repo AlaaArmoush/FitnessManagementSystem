@@ -17,7 +17,9 @@ public class UserDataBase {
 
 		User testClient2 = new User("Client Test2", "client456", "Client", "Activated", "3003");
 		usersList.add(testClient2);
-
+		
+		User instructorTest = new User("instructor test", "instructor11", "instructor", "actived", "123123");
+		usersList.add(instructorTest);
 	}
 
 	public static boolean updateUserDetails(String name, String id, String role, String status) {
@@ -142,6 +144,7 @@ public class UserDataBase {
 				return true;
 			}
 		}
+		
 		return false;
 	}
 }
