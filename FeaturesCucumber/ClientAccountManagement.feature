@@ -3,12 +3,12 @@ Feature: Client Account Management
 
   Scenario: creating a new profile
     Given Im logged in as a client id "client123" password "2002" 
-    When I create a profile with age "20" goal "weight loss" diet "LOW_CARB"
+    When I create a profile with age "20" goal 75 diet "LOW_CARB"
     Then a profile for that user should be created
 
 	Scenario: updating a profile info
 		Given Im logged in as a client id "client123" password "2002" 
-		When I update my profile with age "21" goal "building muscle" diet "LOW_FAT"
+		When I update my profile with age "21" goal 80 diet "LOW_FAT"
 		Then a profile for that user should be updated
 		
 	Scenario: deleting a profile 

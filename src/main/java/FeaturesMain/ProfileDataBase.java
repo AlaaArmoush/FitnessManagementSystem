@@ -1,10 +1,8 @@
 package FeaturesMain;
 
-import java.util.ArrayList;
-
 public class ProfileDataBase {
 
-	public static boolean addProfile(String clientID, String age, String goal, String diet) {
+	public static boolean addProfile(String clientID, String age, int goal, String diet) {
 		// Retrieve the user from UserDataBase
 		User user = UserDataBase.getUser(clientID);
 
@@ -26,7 +24,7 @@ public class ProfileDataBase {
 		return false;
 	}
 
-	public static boolean updateProfile(String clientID, String age, String goal, String diet) {
+	public static boolean updateProfile(String clientID, String age, int goal, String diet) {
 		// Retrieve the user from UserDataBase
 		User user = UserDataBase.getUser(clientID);
 
