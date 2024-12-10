@@ -5,7 +5,8 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "FeaturesCucumber//ClientFeedback.feature", glue = "FeaturesTest.steps")
+
+@CucumberOptions(features = "FeaturesCucumber//InstructorProgramManagement.feature", glue = "FeaturesTest.steps")
 public class TestRunner {
 
 }
