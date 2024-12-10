@@ -3,11 +3,11 @@ package FeaturesMain;
 public class ClientProfile {
 
 	private String age;
-	private String goal;
+	private int goal;
 	private DietaryPreferences dietDescription;
 
 	// Constructor
-	public ClientProfile(String age, String goal, DietaryPreferences dietDescription) {
+	public ClientProfile(String age, int goal, DietaryPreferences dietDescription) {
 		this.age = age;
 		this.goal = goal;
 		this.dietDescription = dietDescription;
@@ -18,7 +18,7 @@ public class ClientProfile {
 		return age;
 	}
 
-	public String getGoal() {
+	public int getGoal() {
 		return goal;
 	}
 
@@ -31,7 +31,7 @@ public class ClientProfile {
 		this.age = age;
 	}
 
-	public void setGoal(String goal) {
+	public void setGoal(int goal) {
 		this.goal = goal;
 	}
 

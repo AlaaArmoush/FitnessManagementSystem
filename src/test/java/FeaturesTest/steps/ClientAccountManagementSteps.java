@@ -25,8 +25,8 @@ public class ClientAccountManagementSteps {
 		assertTrue("Test failed: Login was not successful.", loggedIn);
 	}
 
-	@When("I create a profile with age {string} goal {string} diet {string}")
-	public void i_create_a_profile_with_age_goal_diet(String age, String goal, String diet) {
+	@When("I create a profile with age {string} goal {int} diet {string}")
+	public void i_create_a_profile_with_age_goal_diet(String age, int goal, String diet) {
 		boolean profileCreated = ProfileDataBase.addProfile("client123", age, goal, diet);
 		assertTrue("Test Failed: profile not created", profileCreated);
 
@@ -46,8 +46,8 @@ public class ClientAccountManagementSteps {
 				UserDataBase.getUser("client123").getProfile().getDiet(), existingProfile.getDiet());
 	}
 
-	@When("I update my profile with age {string} goal {string} diet {string}")
-	public void i_update_my_profile_with_age_goal_diet(String age, String goal, String diet) {
+	@When("I update my profile with age {string} goal {int} diet {string}")
+	public void i_update_my_profile_with_age_goal_diet(String age, int goal, String diet) {
 		// Call the updateProfile method
 		boolean profileUpdated = ProfileDataBase.updateProfile("client123", age, goal, diet);
 
@@ -65,7 +65,7 @@ public class ClientAccountManagementSteps {
 
 		// Validate that the profile has been correctly updated
 		assertEquals("Test failed: Profile age does not match.", "21", updatedProfile.getAge());
-		assertEquals("Test failed: Profile goal does not match.", "building muscle", updatedProfile.getGoal());
+		assertEquals("Test failed: Profile goal does not match.", 80, updatedProfile.getGoal());
 		assertEquals("Test failed: Profile diet does not match.", DietaryPreferences.LOW_FAT, updatedProfile.getDiet());
 	}
 

@@ -7,7 +7,7 @@ public class SubsDataBase {
 
 	static {
 		Subscription testSub = new Subscription("Basic", "100ILS", "10%", "20");
-		Subscription testSub2 = new Subscription("Student", "100", "0%", "20");
+		Subscription testSub2 = new Subscription("Student", "100ILS", "0%", "20");
 		subsList.add(testSub);
 		subsList.add(testSub2);
 

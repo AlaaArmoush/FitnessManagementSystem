@@ -17,8 +17,46 @@ public class UserDataBase {
 
 		User testClient2 = new User("Client Test2", "client456", "Client", "Activated", "3003");
 		usersList.add(testClient2);
-		
-		User instructorTest = new User("instructor test", "instructor11", "instructor", "actived", "123123");
+
+		// for testing programs popularity
+		usersList.add(new User("Client Test3", "client789", "Client", "Activated", "3004"));
+		usersList.add(new User("Client Test4", "client101", "Client", "Activated", "3005"));
+		usersList.add(new User("Client Test5", "client102", "Client", "Activated", "3006"));
+		usersList.add(new User("Client Test6", "client103", "Client", "Activated", "3007"));
+		usersList.add(new User("Client Test7", "client104", "Client", "Activated", "3008"));
+		usersList.add(new User("Client Test8", "client105", "Client", "Activated", "3009"));
+		usersList.add(new User("Client Test9", "client106", "Client", "Activated", "3010"));
+		usersList.add(new User("Client Test10", "client107", "Client", "Activated", "3011"));
+
+		// Create profiles and assign them to existing users
+
+		// Profile for client101
+		ClientProfile P1 = new ClientProfile("25", 70, DietaryPreferences.VEGAN);
+		UserDataBase.getUser("client101").setProfile(P1);
+		UserDataBase.getUser("client101").setWeight(80);
+
+		// Profile for client102
+		ClientProfile P2 = new ClientProfile("30", 75, DietaryPreferences.VEGETARIAN);
+		UserDataBase.getUser("client102").setProfile(P2);
+		UserDataBase.getUser("client102").setWeight(85);
+
+		// Profile for client103
+		ClientProfile P3 = new ClientProfile("20", 60, DietaryPreferences.KETO);
+		UserDataBase.getUser("client103").setProfile(P3);
+		UserDataBase.getUser("client103").setWeight(65);
+
+		// Profile for client104
+		ClientProfile P4 = new ClientProfile("28", 68, DietaryPreferences.VEGAN);
+		UserDataBase.getUser("client104").setProfile(P4);
+		UserDataBase.getUser("client104").setWeight(75);
+
+		// Profile for client105
+		ClientProfile P5 = new ClientProfile("35", 80, DietaryPreferences.VEGETARIAN);
+		UserDataBase.getUser("client105").setProfile(P5);
+		UserDataBase.getUser("client105").setWeight(90);
+		// -------------------------------------------------------------------
+
+		User instructorTest = new User("instructor test", "instructor11", "Instructor", "Activated", "123123");
 		usersList.add(instructorTest);
 	}
 
@@ -144,7 +182,70 @@ public class UserDataBase {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
+
+	public static String generateRevenueEstimate() {
+		// Get the number of active clients and instructors
+		int activeClients = getActiveUserCount("Client");
+		int activeInstructors = getActiveUserCount("Instructor");
+
+		// Define the average monthly subscription for clients (175 ILS)
+		int clientSubscription = 175;
+
+		// Define the monthly salary for instructors (200 ILS)
+		int instructorSalary = 200;
+
+		long grossRevenue = activeClients * clientSubscription;
+
+		long netRevenue = grossRevenue - (activeInstructors * instructorSalary);
+		String report = "-------------------------\n";
+		report += "Monthly Revenue Report:\n";
+		report += "-------------------------\n";
+		report += "Active Clients: " + activeClients + "\n";
+		report += "Active Instructors: " + activeInstructors + "\n";
+		report += "Gross Revenue: " + grossRevenue + " ILS\n";
+		report += "Net Revenue: " + netRevenue + " ILS\n";
+
+		return report;
+	}
+
+	public static String generateClientProgressReport() {
+		StringBuilder report = new StringBuilder();
+		report.append("-------------------------\n");
+		report.append("Client Progress Report:\n");
+		report.append("-------------------------\n");
+
+		for (User user : usersList) {
+			if (user.getRole().equals("Client") && user.getProfile() != null) {
+				ClientProfile profile = user.getProfile();
+				int currentWeight = user.getWeight();
+				int goalWeight = profile.getGoal();
+
+				report.append("Client ID: ").append(user.getID()).append("\n");
+				report.append("Name: ").append(user.getName()).append("\n");
+				report.append("Current Weight: ").append(currentWeight).append(" kg\n");
+				report.append("Goal Weight: ").append(goalWeight).append(" kg\n");
+
+				if (currentWeight > goalWeight) {
+					report.append("Status: Needs to lose ").append(currentWeight - goalWeight).append(" kg\n");
+				} else if (currentWeight < goalWeight) {
+					report.append("Status: Needs to gain ").append(goalWeight - currentWeight).append(" kg\n");
+				} else {
+					report.append("Status: Goal achieved!\n");
+				}
+
+				report.append("-------------------------\n");
+			}
+		}
+
+		if (report.toString()
+				.equals("-------------------------\nClient Progress Report:\n-------------------------\n")) {
+			return "No clients with profiles available for the report.";
+		}
+
+		return report.toString();
+	}
+
 }
