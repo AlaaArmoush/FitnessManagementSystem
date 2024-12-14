@@ -2,7 +2,7 @@ package FeaturesMain;
 
 public class Session {
 	
-	private String sessionType; // in-person = 0 , online = 1
+	private String sessionType; 
 	private String sessionSchedule;
 	
 	

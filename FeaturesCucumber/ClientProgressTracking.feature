@@ -1,4 +1,4 @@
-Feature: Progress Tracking
+ Feature: Progress Tracking
   As a client, I want to know my BMI, how much weight I should gain or lose, 
   and view my achievements and badges.
 

@@ -15,6 +15,8 @@ public class Program {
 	private String programId;
 	private ArrayList<User> enrolledClient = new ArrayList<>();
 	private String programStatus;
+	private Integer sessionsCount;
+	private Integer targetedHours;
 
 	public Program(String title, String durationTime, String difficultyLevel, String goals) {
 		this(title, durationTime, difficultyLevel, goals, null, null);
@@ -31,6 +33,7 @@ public class Program {
 		this.programId = programId;
 		this.price = "0";
 		this.attachments = new ArrayList<Attachment>();
+		this.setTargetedHours(durationTime);
 
 	}
 
@@ -112,7 +115,20 @@ public class Program {
 	}
 
 	public void addClient(User client) {
-		this.enrolledClient.add(client);
+		if(checkIfClientExistInProgram(client)) {
+			System.out.println("client was not added");
+		}
+		else {
+			this.enrolledClient.add(client);
+			client.addProgram(this);
+			System.out.println("client added");
+		}
+		
+	}
+	
+	public void addClient(String clientId) {
+		User client = UserDataBase.getUser(clientId);
+		this.addClient(client);
 	}
 
 	public int getEnrolledClientCount() {
@@ -134,6 +150,54 @@ public class Program {
 
 	public String getStatus() {
 		return this.programStatus;
+	}
+	
+	
+	public void showClientsProgress () {
+		for (User c : enrolledClient) {
+			System.out.println("name: " + c.getName() + "BMI: " + c.getBMI() + "Attendence: " + c.getAttendence(this)+" completion rate: " + c.getCompletionRate(this));
+		}
+		
+	}
+
+	public Integer getSessionsCount() {
+		return sessionsCount;
+	}
+
+	public void setSessionsCount(Integer sessionsCount) {
+		this.sessionsCount = sessionsCount;
+	}
+	
+	public ArrayList <User> getEnrolledClient(){
+		return this.enrolledClient;
+	}
+
+	public Integer getTargetedHours() {
+		return targetedHours;
+	}
+	
+	public void setTargetedHours(Integer targetedHours) {
+		this.targetedHours = targetedHours;
+	}
+
+
+	private void setTargetedHours(String durationTime) {
+		
+		// Extract the numeric part using regular expressions
+		String numberPart = durationTime.replaceAll("[^0-9]", ""); 
+        
+        int result = Integer.parseInt(numberPart);
+		this.targetedHours = result;
+	}
+	
+	private boolean checkIfClientExistInProgram(User client) {
+		boolean exists = false;
+		for(User u : enrolledClient) {
+			if(u.getID().equals(client.getID())) {
+				exists = true;
+			}
+		}
+		return exists;
 	}
 
 }
