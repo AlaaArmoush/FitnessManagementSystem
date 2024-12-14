@@ -14,15 +14,15 @@ public class ProgramDataBase {
 	private static boolean lastUpdate;
 
 	static {
-		Program testProgram1 = new Program("Lower Body Work Out", "Three months", "Beginners", "goal", "instructor13",
+		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
 		addNewProgram(testProgram1);
 
-		Program testProgram2 = new Program("yoga", "six mounth", "Beginners", "flexibility", "instructor13", "100001");
+		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor13", "100001");
 		addNewProgram(testProgram2);
 
 		// added to test enrollment count
-		Program testProgram3 = new Program("Cardio Blast", "One month", "Intermediate", "Endurance", "instructor14",
+		Program testProgram3 = new Program("Cardio Blast", "20 hours", "Intermediate", "Endurance", "instructor14",
 				"100002");
 		addNewProgram(testProgram3);
 
