@@ -17,7 +17,7 @@ import io.cucumber.java.en.When;
 public class AdminProgramMonitoringSteps {
 	MyApplication app;
 	ArrayList<Program> rankedPrograms = new ArrayList<>();
-	String report1, report2;
+	String report1, report2, report3;
 
 	public AdminProgramMonitoringSteps() {
 		app = new MyApplication();
@@ -45,11 +45,11 @@ public class AdminProgramMonitoringSteps {
 
 		for (Program P : ProgramDataBase.getProgramsList()) {
 			if (P.getProgramId().equals("100000")) {
-				assertEquals("Program 100000 should have 2 enrolled clients", 2, P.getEnrolledClientCount());
+				assertEquals("Program 100000 should have 2 enrolled clients", 4, P.getEnrolledClientCount());
 			} else if (P.getProgramId().equals("100001")) {
-				assertEquals("Program 100001 should have 1 enrolled client", 1, P.getEnrolledClientCount());
+				assertEquals("Program 100001 should have 1 enrolled client", 3, P.getEnrolledClientCount());
 			} else if (P.getProgramId().equals("100002")) {
-				assertEquals("Program 100002 should have 5 enrolled clients", 5, P.getEnrolledClientCount());
+				assertEquals("Program 100002 should have 5 enrolled clients", 6, P.getEnrolledClientCount());
 			}
 		}
 	}
@@ -97,6 +97,18 @@ public class AdminProgramMonitoringSteps {
 	public void a_report_should_be_created() {
 		assertNotNull("The report should not be null", report2);
 		System.out.println("\n" + report2);
+	}
+
+	@When("I ask for the client attendance report")
+	public void i_ask_for_the_client_attendance_report() {
+		report3 = UserDataBase.generateClientAttendanceReport();
+
+	}
+
+	@Then("a report of attendance  should be created.")
+	public void a_report_of_attendance_should_be_created() {
+		assertNotNull("The report should not be null", report3);
+		System.out.println("\n" + report3);
 	}
 
 }

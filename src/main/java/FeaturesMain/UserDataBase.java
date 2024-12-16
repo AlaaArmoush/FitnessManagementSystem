@@ -17,7 +17,6 @@ public class UserDataBase {
 
 		User testClient2 = new User("Client Test2", "client456", "Client", "Activated", "3003");
 		usersList.add(testClient2);
-		
 
 		// for testing programs popularity
 		usersList.add(new User("Client Test3", "client789", "Client", "Activated", "3004"));
@@ -28,19 +27,18 @@ public class UserDataBase {
 		usersList.add(new User("Client Test8", "client105", "Client", "Activated", "3009"));
 		usersList.add(new User("Client Test9", "client106", "Client", "Activated", "3010"));
 		usersList.add(new User("Client Test10", "client107", "Client", "Activated", "3011"));
-		
-		// for testing instructor progress tracking 
-		
+
+		// for testing instructor progress tracking
+
 		User clientTest1 = new User("Client Test01", "client790", "Client", "Activated", "30012");
 		User clientTest2 = new User("Client Test02", "client791", "Client", "Activated", "30013");
 		User clientTest3 = new User("Client Test03", "client792", "Client", "Activated", "30014");
 		User clientTest4 = new User("Client Test04", "client793", "Client", "Activated", "30015");
-		
+
 		addUser(clientTest1);
 		addUser(clientTest2);
 		addUser(clientTest3);
 		addUser(clientTest4);
-		
 
 		// Create profiles and assign them to existing users
 
@@ -109,14 +107,13 @@ public class UserDataBase {
 
 	public static boolean addUser(User user) {
 		// check if already exists
-		if(userExist(user.getID())) {
+		if (userExist(user.getID())) {
 			System.out.println("user already exists");
-		}
-		else {
+		} else {
 			usersList.add(user);
 			System.out.println("New user added: " + user);
 		}
-		
+
 		return true;
 	}
 
@@ -262,6 +259,36 @@ public class UserDataBase {
 		if (report.toString()
 				.equals("-------------------------\nClient Progress Report:\n-------------------------\n")) {
 			return "No clients with profiles available for the report.";
+		}
+
+		return report.toString();
+	}
+
+	public static String generateClientAttendanceReport() {
+		StringBuilder report = new StringBuilder();
+		report.append("-------------------------\n");
+		report.append("Client Attendance Report:\n");
+		report.append("-------------------------\n");
+
+		for (User user : usersList) {
+			if (user.getRole().equals("Client")) {
+
+				report.append("Client ID: ").append(user.getID()).append("\n");
+				report.append("Name: ").append(user.getName()).append("\n");
+				for (Program program : user.getPrograms()) {
+					report.append("Program Title: ").append(program.getTitle()).append("\n");
+					report.append("Attendance: ").append(user.getAttendence(program)).append("%\n");
+					// report.append("Completion Rate:
+					// ").append(user.getCompletionRate(program)).append("%\n");
+				}
+
+				report.append("-------------------------\n");
+			}
+		}
+
+		if (report.toString()
+				.equals("-------------------------\nClient Attendance Report:\n-------------------------\n")) {
+			return "No clients with attendance records available for the report.";
 		}
 
 		return report.toString();
