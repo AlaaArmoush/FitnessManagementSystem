@@ -16,14 +16,23 @@ public class ProgramDataBase {
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
+		testProgram1.addClient("client123");
+		testProgram1.addClient("client456");
 		addNewProgram(testProgram1);
 
 		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor13", "100001");
+		testProgram2.addClient("client789");
+		testProgram2.addClient("client101");
+		testProgram2.addClient("client102");
 		addNewProgram(testProgram2);
 
 		// added to test enrollment count
 		Program testProgram3 = new Program("Cardio Blast", "20 hours", "Intermediate", "Endurance", "instructor14",
 				"100002");
+		testProgram3.addClient("client102");
+		testProgram3.addClient("client103");
+		testProgram3.addClient("client104");
+		testProgram3.addClient("client105");
 		addNewProgram(testProgram3);
 
 	}

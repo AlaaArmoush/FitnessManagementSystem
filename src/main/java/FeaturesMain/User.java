@@ -14,9 +14,9 @@ public class User {
 	private int height;
 	private int weight;
 	private int NumOfPro;
-	private ArrayList<AchievementBadge> earnedBadges;
-	private ArrayList <ProgramAttendence> attendence;
-	private ArrayList <InboxItem> inbox;
+	private ArrayList<AchievementBadge> earnedBadges = new ArrayList<>();
+	private ArrayList<ProgramAttendence> attendence = new ArrayList<>();
+	private ArrayList<InboxItem> inbox = new ArrayList<>();
 
 	// constructor for backward compatibility (before i added password and profile)
 	public User(String name, String id, String role, String status) {
@@ -205,7 +205,7 @@ public class User {
 			}
 		}
 	}
-	
+
 	public void addProgram(Program program) {
 		ProgramAttendence enrolledInProgram = new ProgramAttendence(program);
 		for (ProgramAttendence pe : attendence) {
@@ -215,73 +215,77 @@ public class User {
 			}
 		}
 		attendence.add(enrolledInProgram);
-		
-		
+
 	}
 
 	public int getAttendence(Program program) {
 		int t = 0;
 		for (ProgramAttendence pe : attendence) {
-			if(pe.getProgram().equals(program)) {
-				t= pe.getAttendedSessions();
+			if (pe.getProgram().equals(program)) {
+				t = pe.getAttendedSessions();
 			}
-				
-			}
+
+		}
 		return t;
 	}
 
 	public String getCompletionRate(Program program) {
 		double percentage = 0;
 		for (ProgramAttendence pe : attendence) {
-			if(pe.getProgram().equals(program)) {
-				percentage= pe.getCompletionRate();
+			if (pe.getProgram().equals(program)) {
+				percentage = pe.getCompletionRate();
 			}
-				
-			}
-		String completionRate = String.format(percentage+"%%", null);
+
+		}
+		String completionRate = String.format(percentage + "%%", null);
 		return completionRate;
 	}
 
 	public void addItemToInbox(InboxItem item) {
 		inbox.add(item);
-		
+
 	}
 
 	public void setAttendence(String programId, int attended) {
 		for (ProgramAttendence pe : attendence) {
-			if(pe.getProgram().getProgramId().equals(programId)) {
+			if (pe.getProgram().getProgramId().equals(programId)) {
 				pe.setAttendedSessions(attended);
 			}
-				
-			}
-		
+
+		}
+
 	}
-	
+
 	public void setAbsent(String programId) {
 		for (ProgramAttendence pe : attendence) {
-			if(pe.getProgram().getProgramId().equals(programId)) {
+			if (pe.getProgram().getProgramId().equals(programId)) {
 				pe.updateAbsent();
 			}
-				
-			}
+
+		}
 	}
 
 	public String getReport(String programId) {
 		for (ProgramAttendence pe : attendence) {
-			if(pe.getProgram().getProgramId().equals(programId)) {
+			if (pe.getProgram().getProgramId().equals(programId)) {
 				return pe.createProgressReport();
 			}
-				
-			}
+
+		}
 		return "no data";
 	}
 
-	
+	public ArrayList<Program> getPrograms() {
+		ArrayList<Program> programs = new ArrayList<>();
 
-	
+		for (Program p : ProgramDataBase.getProgramsList()) {
+			for (User u : p.getEnrolledClient()) {
+				if (u.getID().equals(id))
+					programs.add(p);
+			}
+		}
 
-	
-
-	
+		return programs;
+	}
 
 }

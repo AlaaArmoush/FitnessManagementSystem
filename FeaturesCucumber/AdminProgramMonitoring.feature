@@ -18,4 +18,8 @@ Scenario: Generate reports on client progress
   When I ask for the monthly client progress report
   Then a report should be created.
   
-  
+Scenario: Generate reports on client attendance
+  Given I am logged in as an admin id "admin123" password "1001"
+  When I ask for the client attendance report
+  Then a report of attendance  should be created.
+    
