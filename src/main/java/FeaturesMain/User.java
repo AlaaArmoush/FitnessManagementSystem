@@ -233,11 +233,13 @@ public class User {
 		double percentage = 0;
 		for (ProgramAttendence pe : attendence) {
 			if (pe.getProgram().equals(program)) {
-				percentage = pe.getCompletionRate();
+				Double rate = pe.getCompletionRate();
+				if (rate != null) { // Avoid NullPointerException
+					percentage = rate;
+				}
 			}
-
 		}
-		String completionRate = String.format(percentage + "%%", null);
+		String completionRate = String.format("%.2f%%", percentage);
 		return completionRate;
 	}
 

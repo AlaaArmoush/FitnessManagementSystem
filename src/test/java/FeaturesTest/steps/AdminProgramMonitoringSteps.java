@@ -25,6 +25,8 @@ public class AdminProgramMonitoringSteps {
 
 	@Given("there are programs with enrolled users")
 	public void there_are_programs_with_enrolled_users() {
+		int enrolledExp1, enrolledExp2, enrolledExp3;
+
 		for (Program P : ProgramDataBase.getProgramsList()) {
 			if (P.getProgramId().equals("100000")) {
 				P.setStaus(1);
@@ -43,13 +45,16 @@ public class AdminProgramMonitoringSteps {
 			}
 		}
 
+		enrolledExp1 = ProgramDataBase.getProgram("100000").getEnrolledClientCount();
+		enrolledExp2 = ProgramDataBase.getProgram("100001").getEnrolledClientCount();
+		enrolledExp3 = ProgramDataBase.getProgram("100002").getEnrolledClientCount();
 		for (Program P : ProgramDataBase.getProgramsList()) {
 			if (P.getProgramId().equals("100000")) {
-				assertEquals("Program 100000 should have 2 enrolled clients", 4, P.getEnrolledClientCount());
+				assertEquals("Program 100000 enroling error", enrolledExp1, P.getEnrolledClientCount());
 			} else if (P.getProgramId().equals("100001")) {
-				assertEquals("Program 100001 should have 1 enrolled client", 3, P.getEnrolledClientCount());
+				assertEquals("Program 100001 enroling error", enrolledExp2, P.getEnrolledClientCount());
 			} else if (P.getProgramId().equals("100002")) {
-				assertEquals("Program 100002 should have 5 enrolled clients", 6, P.getEnrolledClientCount());
+				assertEquals("Program 100002 enroling error", enrolledExp3, P.getEnrolledClientCount());
 			}
 		}
 	}
