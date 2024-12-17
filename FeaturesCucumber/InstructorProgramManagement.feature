@@ -61,8 +61,8 @@ Feature: Instructor program management
 	
 	Scenario: delete a program
 		Given  Im logged in as an instructor with id "instructor11" password "123123"
-		Given the instructor has a program with id "100001"
-		When the instructor wants to delete the program with id "100001"
+		Given the instructor has a program with id "100000"
+		When the instructor wants to delete the program with id "100000"
 		Then the program should no longer appear in the instructors program list
 		
 		

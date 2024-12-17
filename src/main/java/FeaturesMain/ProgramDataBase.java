@@ -14,6 +14,7 @@ public class ProgramDataBase {
 	private static boolean lastUpdate;
 
 	static {
+		System.out.println("Static block initialized.");
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
 		testProgram1.addClient("client123");
@@ -21,10 +22,23 @@ public class ProgramDataBase {
 		addNewProgram(testProgram1);
 
 		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor13", "100001");
+
 		testProgram2.addClient("client789");
 		testProgram2.addClient("client101");
 		testProgram2.addClient("client102");
 		addNewProgram(testProgram2);
+
+		// Instructor client progress tracking*************
+		ProgramDataBase.getProgram("100001").setSessionsCount(5);
+		ProgramDataBase.getProgram("100001").addClient("client790");
+		ProgramDataBase.getProgram("100001").addClient("client791");
+		ProgramDataBase.getProgram("100001").addClient("client792");
+		ProgramDataBase.getProgram("100001").addClient("client793");
+		UserDataBase.getUser("client790").setAttendence("100001", 2);
+		UserDataBase.getUser("client791").setAttendence("100001", 3);
+		UserDataBase.getUser("client792").setAttendence("100001", 4);
+		UserDataBase.getUser("client793").setAttendence("100001", 1);
+		// ***********************************************
 
 		// added to test enrollment count
 		Program testProgram3 = new Program("Cardio Blast", "20 hours", "Intermediate", "Endurance", "instructor14",
