@@ -1,4 +1,4 @@
-Feature: Subscription Management
+Feature: Admin Subscription Management
   As an admin, I want to manage subscription plans so that I can offer tailored options for clients and instructors.
 
   Scenario: Create a new subscription plan

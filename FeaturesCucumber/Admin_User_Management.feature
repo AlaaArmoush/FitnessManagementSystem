@@ -1,4 +1,4 @@
-Feature: User Management in Fitness Management System
+Feature: Admin User Management
   As an admin,
   I want to manage user accounts (instructors and clients) and monitor activity,
   So that I can ensure proper functionality and engagement.

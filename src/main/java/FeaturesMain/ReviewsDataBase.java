@@ -6,6 +6,16 @@ public class ReviewsDataBase {
 	private static ArrayList<Review> reviewsList = new ArrayList<>();
 	private static ArrayList<Feedback> feedbackList = new ArrayList<>();
 
+	static {
+		// Adding sample reviews
+		reviewsList.add(new Review("client123", "100000", "5", "Amazing program! Very helpful."));
+		reviewsList.add(new Review("client456", "100001", "4", "Great content, but could use more examples."));
+
+		// Adding sample feedbacks
+		feedbackList.add(new Feedback("client123", "Please add more advanced topics."));
+		feedbackList.add(new Feedback("client456", "Loved the interactive sessions!"));
+	}
+
 	public static boolean addReview(String clientID, String programID, String rating, String review) {
 		Review testReview = new Review(clientID, programID, rating, review);
 		reviewsList.add(testReview);
@@ -36,6 +46,14 @@ public class ReviewsDataBase {
 				return true;
 			}
 		return false;
+	}
+
+	public static ArrayList<Feedback> getFeedbackList() {
+		return feedbackList;
+	}
+
+	public static ArrayList<Review> getReviewsList() {
+		return reviewsList;
 	}
 
 }
