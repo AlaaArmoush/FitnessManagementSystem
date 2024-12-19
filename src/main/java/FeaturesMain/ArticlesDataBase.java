@@ -1,6 +1,7 @@
 package FeaturesMain;
 
 import java.awt.Desktop;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -30,17 +31,17 @@ public class ArticlesDataBase {
 		return false;
 	}
 
-	public static void approveArticle(String id) {
+	public static boolean approveArticle(String id) {
 		for (Article a : pendingArticles) {
 			if (a.getID().equals(id)) {
 				approvedArticles.add(a);
 				pendingArticles.remove(a);
-				return;
+				return true;
 			}
 		}
 
 		System.out.println("article not found");
-		return;
+		return false;
 	}
 
 	public static void openURL(String id) {
@@ -59,20 +60,24 @@ public class ArticlesDataBase {
 		return null;
 	}
 
-	public static void rejectArticle(String id) {
+	public static boolean rejectArticle(String id) {
 		for (Article a : pendingArticles) {
 			if (a.getID().equals(id)) {
 				System.out.println("Article rejected: " + a.getTitle());
 				pendingArticles.remove(a);
-				return;
+				return true;
 			}
 		}
 
-		return;
+		return false;
 	}
 
 	public static ArrayList<Article> getApprovedList() {
 		return approvedArticles;
+	}
+
+	public static ArrayList<Article> getPendingArticles() {
+		return pendingArticles;
 	}
 
 }
