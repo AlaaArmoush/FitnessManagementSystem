@@ -116,11 +116,11 @@ public class Program {
 
 	public void addClient(User client) {
 		if (checkIfClientExistInProgram(client)) {
-			System.out.println("client was not added");
+			// System.out.println("client was not added");
 		} else {
 			this.enrolledClient.add(client);
 			client.addProgram(this);
-			System.out.println(client.getName() + " was added to " + this.getTitle());
+			// System.out.println(client.getName() + " was added to " + this.getTitle());
 		}
 
 	}
@@ -206,6 +206,15 @@ public class Program {
 			}
 		}
 		return exists;
+	}
+
+	public boolean hasClient(String clientId) {
+		for (User client : enrolledClient) {
+			if (client.getID().equals(clientId)) {
+				return true; // Client found
+			}
+		}
+		return false; // Client not found
 	}
 
 }
