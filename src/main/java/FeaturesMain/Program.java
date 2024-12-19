@@ -200,4 +200,10 @@ public class Program {
 		return exists;
 	}
 
+	public boolean notifyClientsAboutNewSchedule() {
+		boolean notified = InboxManagement.SendNotificationAboutNewSchedule(this.getProgramId(),this.getGroupSession().getSessionSchedule());
+		return notified;
+		
+	}
+
 }

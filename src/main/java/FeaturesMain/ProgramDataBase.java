@@ -12,13 +12,14 @@ public class ProgramDataBase {
 	private static ArrayList<Attachment> attachmentsTest = new ArrayList<Attachment>();
 
 	private static boolean lastUpdate;
+	private static boolean programCreated;
 
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
 		addNewProgram(testProgram1);
 
-		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor13", "100001");
+		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor11", "100001");
 		addNewProgram(testProgram2);
 
 		// added to test enrollment count
@@ -39,14 +40,16 @@ public class ProgramDataBase {
 		}
 
 		Program newProgram = new Program(title, durationTime, difficultyLevel, goals, instructorId, programId);
+		System.out.println("target: "+newProgram.getTargetedHours());
 		boolean priceSet = setPriceForProgram(newProgram, price);
 		boolean attachmentAdded = addAttachmentsToProgram(newProgram, attachments);
 		if (priceSet && attachmentAdded) {
 			addNewProgram(newProgram);
 			System.out.println("new program added: " + newProgram);
 			programAdded = true;
+			InboxManagement.announceNewProgram(newProgram.getProgramId());
 		}
-
+		setProgramCreated(programAdded);
 		return programAdded;
 	}
 
@@ -154,6 +157,7 @@ public class ProgramDataBase {
 				if (checkIfApplicable(price)) {
 					p.setPrice(price);
 					updated = true;
+					InboxManagement.announceSpecialOffer(programID);
 				} else {
 					System.out.println("re enter an applicable price");
 				}
@@ -199,6 +203,7 @@ public class ProgramDataBase {
 				setScheduleTest = true;
 				if (setScheduleTest) {
 					System.out.println("schedule has been set: " + p.getGroupSession());
+					InboxManagement.SendNotificationAboutNewSchedule(programId, schedule);
 				}
 			}
 		}
@@ -225,7 +230,7 @@ public class ProgramDataBase {
 		for (Program p : programsList)
 			if (p.getProgramId().equals(programID))
 				return p;
-
+		System.out.println("program is null"+ programID);
 		return null;
 	}
 
@@ -252,6 +257,14 @@ public class ProgramDataBase {
 			if (p.getStatus().equals("Active"))
 				System.out.println(p.getTitle() + " program is active and currently and have: "
 						+ p.getEnrolledClientCount() + " clients enrolled");
+	}
+
+	public static boolean isProgramCreated() {
+		return programCreated;
+	}
+
+	public static void setProgramCreated(boolean programCreated) {
+		ProgramDataBase.programCreated = programCreated;
 	}
 
 }

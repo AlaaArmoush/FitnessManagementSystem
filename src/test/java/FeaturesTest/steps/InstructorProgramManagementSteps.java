@@ -57,7 +57,7 @@ public class InstructorProgramManagementSteps {
 	public void uploads_video_titorials_images_or_documents_about_the_program() {
 		String instructorId = "instructor12";
 		String programId = ProgramDataBase.generateProgramId();
-		boolean programExists = ProgramDataBase.addNewProgram("flexibility workout", "three mounths", "beginners",
+		boolean programExists = ProgramDataBase.addNewProgram("flexibility workout", "20 hours", "beginners",
 				"get more flexy", instructorId, programId, attachmentsTest, "100");
 		assertTrue("failed: the program was not created", programExists);
 	}
@@ -66,7 +66,7 @@ public class InstructorProgramManagementSteps {
 	public void sets_the_price_as(String price) {
 		String instructorId = "instructor11";
 		String programId = ProgramDataBase.generateProgramId();
-		boolean programExists = ProgramDataBase.addNewProgram("flexibility workout", "three mounths", "beginners",
+		boolean programExists = ProgramDataBase.addNewProgram("flexibility workout", "40 hours", "beginners",
 				"get more flexy", instructorId, programId, attachmentsTest, price);
 		assertTrue("failed: the program was not created", programExists);
 	}
