@@ -9,12 +9,16 @@ public class Feedback {
 		this.feedback = feedback;
 	}
 
-	public Object getClientID() {
+	public String getClientID() {
 		return clientID;
 	}
 
+	public String getFeedbackDescription() {
+		return feedback;
+	}
+
 	public String toString() {
-		return "Feedback from " + clientID + " says:" + feedback;
+		return "Feedback from " + clientID + " says: " + feedback;
 	}
 
 }

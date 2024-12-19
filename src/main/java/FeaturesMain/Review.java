@@ -47,8 +47,8 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review {" + "clientID='" + clientID + '\'' + ", programID='" + programID + '\'' + ", rating='" + rating
-				+ '\'' + ", review='" + review + '\'' + '}';
+		return String.format("Review by Client ID: %s | Program ID: %s | Rating: %s/5 | Feedback: %s", clientID,
+				programID, rating, review);
 	}
 
 }

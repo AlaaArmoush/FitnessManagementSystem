@@ -1,5 +1,5 @@
 
-Feature: Feedback and Reviews 
+Feature: Client Feedback 
 	as a client, I want to be able to provide reviews for any completed program, and provide feedback 
 	
   Scenario: Reviewing and Rating

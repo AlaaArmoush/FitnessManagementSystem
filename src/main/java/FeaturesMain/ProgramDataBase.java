@@ -12,19 +12,41 @@ public class ProgramDataBase {
 	private static ArrayList<Attachment> attachmentsTest = new ArrayList<Attachment>();
 
 	private static boolean lastUpdate;
-	private static boolean programCreated;
 
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
+		// testProgram1.addClient("client123");
+		testProgram1.addClient("client456");
+		testProgram1.setGroupSession("Morning Session", "Monday, Wednesday, Friday at 8:00 AM");
 		addNewProgram(testProgram1);
 
 		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor11", "100001");
+
+		testProgram2.addClient("client789");
+		testProgram2.addClient("client101");
+		testProgram2.addClient("client102");
 		addNewProgram(testProgram2);
+
+		// Instructor client progress tracking*************
+		ProgramDataBase.getProgram("100001").setSessionsCount(5);
+		ProgramDataBase.getProgram("100001").addClient("client790");
+		ProgramDataBase.getProgram("100001").addClient("client791");
+		ProgramDataBase.getProgram("100001").addClient("client792");
+		ProgramDataBase.getProgram("100001").addClient("client793");
+		UserDataBase.getUser("client790").setAttendence("100001", 2);
+		UserDataBase.getUser("client791").setAttendence("100001", 3);
+		UserDataBase.getUser("client792").setAttendence("100001", 4);
+		UserDataBase.getUser("client793").setAttendence("100001", 1);
+		// ***********************************************
 
 		// added to test enrollment count
 		Program testProgram3 = new Program("Cardio Blast", "20 hours", "Intermediate", "Endurance", "instructor14",
 				"100002");
+		testProgram3.addClient("client102");
+		testProgram3.addClient("client103");
+		testProgram3.addClient("client104");
+		testProgram3.addClient("client105");
 		addNewProgram(testProgram3);
 
 	}
@@ -40,16 +62,14 @@ public class ProgramDataBase {
 		}
 
 		Program newProgram = new Program(title, durationTime, difficultyLevel, goals, instructorId, programId);
-		System.out.println("target: "+newProgram.getTargetedHours());
 		boolean priceSet = setPriceForProgram(newProgram, price);
 		boolean attachmentAdded = addAttachmentsToProgram(newProgram, attachments);
 		if (priceSet && attachmentAdded) {
 			addNewProgram(newProgram);
-			System.out.println("new program added: " + newProgram);
+			// System.out.println("new program added: " + newProgram);
 			programAdded = true;
-			InboxManagement.announceNewProgram(newProgram.getProgramId());
 		}
-		setProgramCreated(programAdded);
+
 		return programAdded;
 	}
 
@@ -77,7 +97,7 @@ public class ProgramDataBase {
 
 		programsList.add(newProgram);
 		usedIds.add(Integer.parseInt(newProgram.getProgramId()));
-		System.out.println("new program added: " + newProgram);
+		// System.out.println("new program added: " + newProgram);
 		return true;
 	}
 
@@ -157,7 +177,6 @@ public class ProgramDataBase {
 				if (checkIfApplicable(price)) {
 					p.setPrice(price);
 					updated = true;
-					InboxManagement.announceSpecialOffer(programID);
 				} else {
 					System.out.println("re enter an applicable price");
 				}
@@ -203,7 +222,6 @@ public class ProgramDataBase {
 				setScheduleTest = true;
 				if (setScheduleTest) {
 					System.out.println("schedule has been set: " + p.getGroupSession());
-					InboxManagement.SendNotificationAboutNewSchedule(programId, schedule);
 				}
 			}
 		}
@@ -230,7 +248,7 @@ public class ProgramDataBase {
 		for (Program p : programsList)
 			if (p.getProgramId().equals(programID))
 				return p;
-		System.out.println("program is null"+ programID);
+
 		return null;
 	}
 
@@ -258,13 +276,30 @@ public class ProgramDataBase {
 				System.out.println(p.getTitle() + " program is active and currently and have: "
 						+ p.getEnrolledClientCount() + " clients enrolled");
 	}
-
+	
 	public static boolean isProgramCreated() {
 		return programCreated;
 	}
 
 	public static void setProgramCreated(boolean programCreated) {
 		ProgramDataBase.programCreated = programCreated;
+	}
+
+	public static ArrayList<Program> getListDifficulty(String difficulty) {
+		ArrayList<Program> filteredPrograms = new ArrayList<>();
+		for (Program p : getProgramsList())
+			if (p.getdifficultyLevel().equals(difficulty))
+				filteredPrograms.add(p);
+
+		return filteredPrograms;
+	}
+
+	public static ArrayList<Program> getListDuration(int duration) {
+		ArrayList<Program> filteredPrograms = new ArrayList<>();
+		for (Program p : getProgramsList())
+			if (p.getTargetedHours() <= duration)
+				filteredPrograms.add(p);
+		return filteredPrograms;
 	}
 
 }

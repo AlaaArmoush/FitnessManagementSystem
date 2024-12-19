@@ -1,23 +1,4 @@
-#Author: your.email@your.domain.com
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios
-#<> (placeholder)
-#""
-## (Comments)
-#Sample Feature Definition Template
-
-Feature: Instructor program management 
+Feature: Instructor Program Management 
   I want the instructors to be able to manage their own programs so they can Create, update, or delete fitness programs 
   
  
@@ -61,8 +42,8 @@ Feature: Instructor program management
 	
 	Scenario: delete a program
 		Given  Im logged in as an instructor with id "instructor11" password "123123"
-		Given the instructor has a program with id "100001"
-		When the instructor wants to delete the program with id "100001"
+		Given the instructor has a program with id "100000"
+		When the instructor wants to delete the program with id "100000"
 		Then the program should no longer appear in the instructors program list
 		
 		

@@ -58,6 +58,7 @@ public class InstructorProgramManagementSteps {
 		String instructorId = "instructor12";
 		String programId = ProgramDataBase.generateProgramId();
 		boolean programExists = ProgramDataBase.addNewProgram("flexibility workout", "20 hours", "beginners",
+
 				"get more flexy", instructorId, programId, attachmentsTest, "100");
 		assertTrue("failed: the program was not created", programExists);
 	}
@@ -145,14 +146,14 @@ public class InstructorProgramManagementSteps {
 	}
 
 	@When("the instructor wants to delete the program with id {string}")
-	public void the_instructor_wants_to_delete_the_program_with_id(String string) {
-		boolean programDeleted = ProgramDataBase.deleteProgram("100001");
+	public void the_instructor_wants_to_delete_the_program_with_id(String id) {
+		boolean programDeleted = ProgramDataBase.deleteProgram(id);
 		assertTrue("failed: program was not deleted", programDeleted);
 	}
 
 	@Then("the program should no longer appear in the instructors program list")
 	public void the_program_should_no_longer_appear_in_the_instructors_program_list() {
-		boolean programExists = ProgramDataBase.programExist("100001");
+		boolean programExists = ProgramDataBase.programExist("100000");
 		assertFalse("failed: program exists", programExists);
 	}
 

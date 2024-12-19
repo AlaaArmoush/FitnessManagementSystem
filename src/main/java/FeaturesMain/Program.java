@@ -115,17 +115,16 @@ public class Program {
 	}
 
 	public void addClient(User client) {
-		if(checkIfClientExistInProgram(client)) {
-			System.out.println("client was not added");
-		}
-		else {
+		if (checkIfClientExistInProgram(client)) {
+			// System.out.println("client was not added");
+		} else {
 			this.enrolledClient.add(client);
 			client.addProgram(this);
-			System.out.println("client added");
+			// System.out.println(client.getName() + " was added to " + this.getTitle());
 		}
-		
+
 	}
-	
+
 	public void addClient(String clientId) {
 		User client = UserDataBase.getUser(clientId);
 		this.addClient(client);
@@ -151,13 +150,13 @@ public class Program {
 	public String getStatus() {
 		return this.programStatus;
 	}
-	
-	
-	public void showClientsProgress () {
+
+	public void showClientsProgress() {
 		for (User c : enrolledClient) {
-			System.out.println("name: " + c.getName() + "BMI: " + c.getBMI() + "Attendence: " + c.getAttendence(this)+" completion rate: " + c.getCompletionRate(this));
+			System.out.println("name: " + c.getName() + "BMI: " + c.getBMI() + "Attendence: " + c.getAttendence(this)
+					+ " completion rate: " + c.getCompletionRate(this));
 		}
-		
+
 	}
 
 	public Integer getSessionsCount() {
@@ -167,43 +166,59 @@ public class Program {
 	public void setSessionsCount(Integer sessionsCount) {
 		this.sessionsCount = sessionsCount;
 	}
-	
-	public ArrayList <User> getEnrolledClient(){
+
+	public ArrayList<User> getEnrolledClient() {
 		return this.enrolledClient;
 	}
 
 	public Integer getTargetedHours() {
 		return targetedHours;
 	}
-	
+
 	public void setTargetedHours(Integer targetedHours) {
 		this.targetedHours = targetedHours;
 	}
 
-
 	private void setTargetedHours(String durationTime) {
-		
 		// Extract the numeric part using regular expressions
-		String numberPart = durationTime.replaceAll("[^0-9]", ""); 
-        
-        int result = Integer.parseInt(numberPart);
-		this.targetedHours = result;
+		String numberPart = durationTime.replaceAll("[^0-9]", "");
+
+		// Validate if numberPart is not empty
+		if (!numberPart.isEmpty()) {
+			int result = Integer.parseInt(numberPart);
+			this.targetedHours = result;
+		} else {
+			// Handle cases where no numbers are found
+			System.err.println("Error: No numeric value found in durationTime: " + durationTime);
+			this.targetedHours = 25;
+		}
+
+		// used this during debugging
+		// System.out.println("Input durationTime: " + durationTime + ", Extracted
+		// numberPart: " + numberPart);
 	}
-	
+
 	private boolean checkIfClientExistInProgram(User client) {
 		boolean exists = false;
-		for(User u : enrolledClient) {
-			if(u.getID().equals(client.getID())) {
+		for (User u : enrolledClient) {
+			if (u.getID().equals(client.getID())) {
 				exists = true;
 			}
 		}
 		return exists;
 	}
-
 	public boolean notifyClientsAboutNewSchedule() {
 		boolean notified = InboxManagement.SendNotificationAboutNewSchedule(this.getProgramId(),this.getGroupSession().getSessionSchedule());
 		return notified;
-		
+	}
+	
+	public boolean hasClient(String clientId) {
+		for (User client : enrolledClient) {
+			if (client.getID().equals(clientId)) {
+				return true; // Client found
+			}
+		}
+		return false; // Client not found
 	}
 
 }
