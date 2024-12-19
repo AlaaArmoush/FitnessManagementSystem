@@ -5,7 +5,7 @@ Feature: Instructor Program Management
   
   Scenario: Create new fitness program
     Given Im logged in as an instructor with id "instructor11" password "123123"
-    When the instructor wants to create new program with title as "flexibility workouts" the duration time as "8 weeks" the difficulty level as "easy" the goals as "improve flexibility and posture"
+    When the instructor wants to create new program with title as "flexibility workouts" the duration time as "20 hours" the difficulty level as "beginners" the goals as "improve flexibility and posture"
     And uploads video titorials, images, or documents about the program
     And sets the price as "300"
     Then the program chould be created and visible in the intructors program list
@@ -16,7 +16,7 @@ Feature: Instructor Program Management
   Scenario: updating an existing program details
   	Given Im logged in as an instructor with id "instructor11" password "123123"
     Given the instructor has a program with id "100001"
-    When the instructor wants to update the program details with title to "Total Body Workout" the duration to "4 weeks" the difficulty level to "Intermediate" the goals to "Improve strength and flexibility" to program with id "100001"
+    When the instructor wants to update the program details with title to "Total Body Workout" the duration to "20 hours" the difficulty level to "Intermediate" the goals to "Improve strength and flexibility" to program with id "100001"
     Then the updated details should be visible in the program list.
 
 	Scenario: updating an extisting program attachments

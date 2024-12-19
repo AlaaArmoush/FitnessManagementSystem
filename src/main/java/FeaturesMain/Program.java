@@ -207,7 +207,11 @@ public class Program {
 		}
 		return exists;
 	}
-
+	public boolean notifyClientsAboutNewSchedule() {
+		boolean notified = InboxManagement.SendNotificationAboutNewSchedule(this.getProgramId(),this.getGroupSession().getSessionSchedule());
+		return notified;
+	}
+	
 	public boolean hasClient(String clientId) {
 		for (User client : enrolledClient) {
 			if (client.getID().equals(clientId)) {

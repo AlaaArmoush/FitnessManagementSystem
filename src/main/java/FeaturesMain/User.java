@@ -49,6 +49,7 @@ public class User {
 		this.password = password;
 		this.NumOfPro = NumOfPro;
 		earnedBadges = new ArrayList<>();
+		inbox = new ArrayList<>();
 	}
 
 	// Getter for name

@@ -12,6 +12,8 @@ public class ProgramDataBase {
 	private static ArrayList<Attachment> attachmentsTest = new ArrayList<Attachment>();
 
 	private static boolean lastUpdate;
+	private static boolean programCreated;
+
 
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
@@ -21,7 +23,7 @@ public class ProgramDataBase {
 		testProgram1.setGroupSession("Morning Session", "Monday, Wednesday, Friday at 8:00 AM");
 		addNewProgram(testProgram1);
 
-		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor13", "100001");
+		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor11", "100001");
 
 		testProgram2.addClient("client789");
 		testProgram2.addClient("client101");
@@ -275,6 +277,14 @@ public class ProgramDataBase {
 			if (p.getStatus().equals("Active"))
 				System.out.println(p.getTitle() + " program is active and currently and have: "
 						+ p.getEnrolledClientCount() + " clients enrolled");
+	}
+	
+	public static boolean isProgramCreated() {
+		return programCreated;
+	}
+
+	public static void setProgramCreated(boolean programCreated) {
+		ProgramDataBase.programCreated = programCreated;
 	}
 
 	public static ArrayList<Program> getListDifficulty(String difficulty) {
