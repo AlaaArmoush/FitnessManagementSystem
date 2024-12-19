@@ -111,7 +111,7 @@ public class UserDataBase {
 			System.out.println("user already exists");
 		} else {
 			usersList.add(user);
-			System.out.println("New user added: " + user);
+			// System.out.println("New user added: " + user);
 		}
 
 		return true;

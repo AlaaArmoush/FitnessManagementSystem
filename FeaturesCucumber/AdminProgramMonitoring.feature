@@ -1,5 +1,5 @@
 
-Feature:  Program Monitoring
+Feature: Admin Program Monitoring
   As an admin i want to view a ranking of programs by popularity, generate reports on monthly revenue and attendacne, track active and completed programs
 
   Scenario: View statistics on the most popular programs and their status
