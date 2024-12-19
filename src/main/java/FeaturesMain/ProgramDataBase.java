@@ -14,11 +14,11 @@ public class ProgramDataBase {
 	private static boolean lastUpdate;
 
 	static {
-		System.out.println("Static block initialized.");
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
-		testProgram1.addClient("client123");
+		// testProgram1.addClient("client123");
 		testProgram1.addClient("client456");
+		testProgram1.setGroupSession("Morning Session", "Monday, Wednesday, Friday at 8:00 AM");
 		addNewProgram(testProgram1);
 
 		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor13", "100001");
@@ -66,7 +66,7 @@ public class ProgramDataBase {
 		boolean attachmentAdded = addAttachmentsToProgram(newProgram, attachments);
 		if (priceSet && attachmentAdded) {
 			addNewProgram(newProgram);
-			System.out.println("new program added: " + newProgram);
+			// System.out.println("new program added: " + newProgram);
 			programAdded = true;
 		}
 
@@ -97,7 +97,7 @@ public class ProgramDataBase {
 
 		programsList.add(newProgram);
 		usedIds.add(Integer.parseInt(newProgram.getProgramId()));
-		System.out.println("new program added: " + newProgram);
+		// System.out.println("new program added: " + newProgram);
 		return true;
 	}
 
@@ -275,6 +275,23 @@ public class ProgramDataBase {
 			if (p.getStatus().equals("Active"))
 				System.out.println(p.getTitle() + " program is active and currently and have: "
 						+ p.getEnrolledClientCount() + " clients enrolled");
+	}
+
+	public static ArrayList<Program> getListDifficulty(String difficulty) {
+		ArrayList<Program> filteredPrograms = new ArrayList<>();
+		for (Program p : getProgramsList())
+			if (p.getdifficultyLevel().equals(difficulty))
+				filteredPrograms.add(p);
+
+		return filteredPrograms;
+	}
+
+	public static ArrayList<Program> getListDuration(int duration) {
+		ArrayList<Program> filteredPrograms = new ArrayList<>();
+		for (Program p : getProgramsList())
+			if (p.getTargetedHours() <= duration)
+				filteredPrograms.add(p);
+		return filteredPrograms;
 	}
 
 }

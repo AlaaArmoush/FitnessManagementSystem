@@ -290,4 +290,17 @@ public class User {
 		return programs;
 	}
 
+	public ArrayList<String> getSchedules() {
+		ArrayList<String> schedules = new ArrayList<>();
+		for (Program program : getPrograms()) { // Use the existing getPrograms method
+			if (program.getGroupSession() != null) { // Check if the program has a session
+				schedules.add("Program: " + program.getTitle() + ", Schedule: "
+						+ program.getGroupSession().getSessionSchedule());
+			} else {
+				schedules.add("Program: " + program.getTitle() + ", Schedule: No schedule available");
+			}
+		}
+		return schedules;
+	}
+
 }
