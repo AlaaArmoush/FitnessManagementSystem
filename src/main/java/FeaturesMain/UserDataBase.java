@@ -70,6 +70,7 @@ public class UserDataBase {
 
 		User instructorTest = new User("instructor test", "instructor11", "Instructor", "Activated", "123123");
 		usersList.add(instructorTest);
+
 	}
 
 	public static boolean updateUserDetails(String name, String id, String role, String status) {
