@@ -1155,8 +1155,179 @@ public class main {
 	}
 
 	private static void InstructorClientInteraction(String instructorId) {
-		// TODO Auto-generated method stub
+		Scanner scanner = new Scanner(System.in);
+		boolean logged = true;
+		while (logged) {
+			System.out.println("\n--- Client Interactions ---");
+			System.out.println("1. Send a direct message to client");
+			System.out.println("2. create a discussion forum");
+			System.out.println("3. Send a feedback to client");
+			System.out.println("4. Send progress reports to clients");
+			System.out.println("5. exit");
+			System.out.println("Please select an option: ");
+			int option;
+			boolean invalid = true;
+			while (invalid) {
+				option = scanner.nextInt();
+				switch (option) {
+				case 1:
+					sendMessage(instructorId);
+					invalid = false;
+					break;
+				case 2:
+					creatDuscussionForum(instructorId);
+					invalid = false;
+					break;
+				case 3:
+					senFeedback(instructorId);
+					invalid = false;
+					break;
+				case 4:
+					sendProgressReports(instructorId);
+					invalid = false;
+					break;
+				case 5:
+					invalid = false;
+					logged = false;
+					break;
+				default:
+					System.out.println("please enter valid option");
 
+				}
+			}
+		}
+	}
+
+	private static void sendProgressReports(String instructorId) {
+		Scanner scanner = new Scanner(System.in);
+		String programId;
+
+		displayInstructorsPrograms(instructorId);
+
+		System.out.println("\nEnter program id: ");
+		boolean invalid = true;
+		while (invalid) {
+			programId = scanner.nextLine();
+			boolean programExist = ProgramDataBase.programExist(programId, instructorId);
+			if (programExist) {
+				InboxManagement.sendProgressRepots(programId);
+				invalid = false;
+			} else {
+				System.out.println("enter valid id");
+			}
+		}
+	}
+
+	private static void senFeedback(String instructorId) {
+		Scanner scanner = new Scanner(System.in);
+		String client;
+		String programId;
+		System.out.println("\n--- Your Clients ---");
+		for (User e : ProgramDataBase.getAllClientsForInstructor(instructorId)) {
+			System.out.println("name: " + e.getName() + " id: " + e.getID());
+		}
+		System.out.print("Enter client id: ");
+		client = scanner.nextLine();
+		boolean noUser = !UserDataBase.userExist(client);
+		while (noUser) {
+			System.out.println("Please enter a valid id.");
+			client = scanner.nextLine();
+			noUser = !UserDataBase.userExist(client);
+		}
+		displayInstructorsPrograms(instructorId);
+		System.out.println("\nEnter program id: ");
+		boolean invalid = true;
+		while (invalid) {
+			programId = scanner.nextLine();
+			boolean programExist = ProgramDataBase.programExist(programId, instructorId);
+			if (programExist) {
+				System.out.println("Enter your message: ");
+				String message = scanner.nextLine();
+
+				InboxManagement.sendFeedback(instructorId, null, message, programId);
+				invalid = false;
+			} else {
+				System.out.println("enter valid id");
+			}
+		}
+
+	}
+
+	private static void creatDuscussionForum(String instructorId) {
+		Scanner scanner = new Scanner(System.in);
+		String client;
+		String programId;
+		String topic = "non";
+
+		displayInstructorsPrograms(instructorId);
+
+		System.out.println("\nEnter program id: ");
+		boolean invalid = true;
+		while (invalid) {
+			programId = scanner.nextLine();
+			boolean programExist = ProgramDataBase.programExist(programId, instructorId);
+			if (programExist) {
+				System.out.println("Enter discussion topic: ");
+				topic = scanner.nextLine();
+				System.out.println("Enter your message: ");
+				String message = scanner.nextLine();
+				InboxManagement.creatDicussionForum(instructorId, topic, message, programId);
+				invalid = false;
+			} else {
+				System.out.println("enter valid id");
+			}
+		}
+
+	}
+
+	private static void sendMessage(String instructorId) {
+		Scanner scanner = new Scanner(System.in);
+
+		// Display available programs for the instructor
+		ArrayList<Program> instructorPrograms = ProgramDataBase.getProgramsForInstructor(instructorId);
+		if (instructorPrograms.isEmpty()) {
+			System.out.println("You do not have any programs assigned.");
+			return;
+		}
+
+		System.out.println("\n--- Your Programs ---");
+		for (int i = 0; i < instructorPrograms.size(); i++) {
+			Program program = instructorPrograms.get(i);
+			System.out.println((i + 1) + ". " + program.getTitle() + " (ID: " + program.getProgramId() + ")");
+		}
+
+		// Prompt the instructor to select a program
+		System.out.print("Enter the program number you want to send a message for: ");
+		int programIndex = scanner.nextInt() - 1;
+		scanner.nextLine(); // consume the newline character
+
+		if (programIndex < 0 || programIndex >= instructorPrograms.size()) {
+			System.out.println("Invalid selection.");
+			return;
+		}
+
+		Program selectedProgram = instructorPrograms.get(programIndex);
+		String programId = selectedProgram.getProgramId();
+
+		System.out.println("\n--- Clients for Program: " + selectedProgram.getTitle() + " ---");
+		for (User e : selectedProgram.getEnrolledClient()) {
+			System.out.println("Name: " + e.getName() + " | ID: " + e.getID());
+		}
+
+		System.out.print("Enter client ID: ");
+		String client = scanner.nextLine();
+
+		boolean noUser = !UserDataBase.userExist(client);
+		while (noUser) {
+			System.out.println("Please enter a valid client ID.");
+			client = scanner.nextLine();
+			noUser = !UserDataBase.userExist(client);
+		}
+
+		System.out.println("Enter your message: ");
+		String message = scanner.nextLine();
+
+		InboxManagement.sendDirectMessage(instructorId, message, client, programId);
 	}
 
 //***************************************Client Menu*****************************************************

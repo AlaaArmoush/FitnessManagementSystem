@@ -331,4 +331,14 @@ public class ProgramDataBase {
 		return filteredPrograms;
 	}
 
+	public static ArrayList<User> getAllClientsForInstructor(String instructorId) {
+		ArrayList<User> clients = new ArrayList<>();
+		for (Program p : getProgramsForInstructor(instructorId)) {
+			for (User u : p.getEnrolledClient()) {
+				clients.add(u);
+			}
+		}
+		return clients;
+
+	}
 }
