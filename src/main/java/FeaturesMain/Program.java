@@ -18,6 +18,13 @@ public class Program {
 	private Integer sessionsCount;
 	private Integer targetedHours;
 
+	public Program(String title, String durationTime, String difficultyLevel, String goals, String instructorId) {
+		this(title, durationTime, difficultyLevel, goals, null, null);
+		String id = ProgramDataBase.generateProgramId();
+		this.programId = id;
+		this.instructorId = instructorId;
+	}
+
 	public Program(String title, String durationTime, String difficultyLevel, String goals) {
 		this(title, durationTime, difficultyLevel, goals, null, null);
 	}
@@ -207,11 +214,13 @@ public class Program {
 		}
 		return exists;
 	}
+
 	public boolean notifyClientsAboutNewSchedule() {
-		boolean notified = InboxManagement.SendNotificationAboutNewSchedule(this.getProgramId(),this.getGroupSession().getSessionSchedule());
+		boolean notified = InboxManagement.SendNotificationAboutNewSchedule(this.getProgramId(),
+				this.getGroupSession().getSessionSchedule());
 		return notified;
 	}
-	
+
 	public boolean hasClient(String clientId) {
 		for (User client : enrolledClient) {
 			if (client.getID().equals(clientId)) {

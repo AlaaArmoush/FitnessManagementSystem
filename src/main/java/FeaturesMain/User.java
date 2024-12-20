@@ -193,6 +193,27 @@ public class User {
 	}
 
 	public ArrayList<AchievementBadge> getEarnedBadges() {
+		if (getNumOfPro() >= 1 && !earnedBadges.contains(AchievementBadge.NEWBIE_CHAMP)) {
+			earnedBadges.add(AchievementBadge.NEWBIE_CHAMP);
+		}
+		if (getNumOfPro() >= 2 && !earnedBadges.contains(AchievementBadge.RISING_STAR)) {
+			earnedBadges.add(AchievementBadge.RISING_STAR);
+		}
+		if (getNumOfPro() >= 3 && !earnedBadges.contains(AchievementBadge.FITNESS_WARRIOR)) {
+			earnedBadges.add(AchievementBadge.FITNESS_WARRIOR);
+		}
+		if (getNumOfPro() >= 4 && !earnedBadges.contains(AchievementBadge.TENACIOUS_TITAN)) {
+			earnedBadges.add(AchievementBadge.TENACIOUS_TITAN);
+		}
+		if (getNumOfPro() >= 5 && !earnedBadges.contains(AchievementBadge.GOAL_CRUSHER)) {
+			earnedBadges.add(AchievementBadge.GOAL_CRUSHER);
+		}
+		if (getNumOfPro() >= 6 && !earnedBadges.contains(AchievementBadge.UNSTOPPABLE_FORCE)) {
+			earnedBadges.add(AchievementBadge.UNSTOPPABLE_FORCE);
+		}
+		if (getNumOfPro() >= 7 && !earnedBadges.contains(AchievementBadge.LEGENDARY_GRIT)) {
+			earnedBadges.add(AchievementBadge.LEGENDARY_GRIT);
+		}
 		return earnedBadges;
 	}
 
@@ -244,9 +265,23 @@ public class User {
 		return completionRate;
 	}
 
+	public void showInbox() {
+		System.out.println("Inbox for " + this.name + ":");
+		if (this.inbox.isEmpty()) {
+			System.out.println("Inbox is empty.");
+		} else {
+			for (InboxItem item : this.inbox) {
+				System.out.println(item.getMessage());
+			}
+		}
+	}
+
+	public ArrayList<InboxItem> getInbox() {
+		return inbox;
+	}
+
 	public void addItemToInbox(InboxItem item) {
 		inbox.add(item);
-
 	}
 
 	public void setAttendence(String programId, int attended) {
@@ -289,6 +324,10 @@ public class User {
 		}
 
 		return programs;
+	}
+
+	public void setPassword(String pass) {
+		this.password = pass;
 	}
 
 	public ArrayList<String> getSchedules() {

@@ -78,7 +78,7 @@ public class AdminUserManagementSteps {
 
 	@Given("there are pending instructor registration requests")
 	public void there_are_pending_instructor_registration_requests() {
-		boolean pending = UserDataBase.addPendingInstructor("1234567", "Haya Samaana");
+		boolean pending = UserDataBase.addPendingInstructor("admin1234567", "Haya Samaana", "54321");
 		assertTrue("Test Failed: No pending request", pending);
 	}
 
