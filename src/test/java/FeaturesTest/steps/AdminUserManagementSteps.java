@@ -78,19 +78,19 @@ public class AdminUserManagementSteps {
 
 	@Given("there are pending instructor registration requests")
 	public void there_are_pending_instructor_registration_requests() {
-		boolean pending = UserDataBase.addPendingInstructor("1234567", "Haya Samaana");
+		boolean pending = UserDataBase.addPendingInstructor("admin1234567", "Haya Samaana", "54321");
 		assertTrue("Test Failed: No pending request", pending);
 	}
 
 	@When("I approve a request")
 	public void i_approve_a_request() {
-		boolean approved = UserDataBase.approveInstructorRequest("1234567");
+		boolean approved = UserDataBase.approveInstructorRequest("admin1234567");
 		assertTrue("Test failed: Instructor request not approved.", approved);
 	}
 
 	@Then("the instructor account should be {string}")
 	public void the_instructor_account_should_be_activated(String expectedStatus) {
-		String actualStatus = UserDataBase.getUser("1234567").getStatus();
+		String actualStatus = UserDataBase.getUser("admin1234567").getStatus();
 		assertEquals("Test failed: Status not updated correctly.", expectedStatus, actualStatus);
 	}
 

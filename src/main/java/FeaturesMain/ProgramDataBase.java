@@ -14,12 +14,12 @@ public class ProgramDataBase {
 	private static boolean lastUpdate;
 	private static boolean programCreated;
 
-
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
 				"100000");
 		// testProgram1.addClient("client123");
 		testProgram1.addClient("client456");
+		testProgram1.addClient("client123");
 		testProgram1.setGroupSession("Morning Session", "Monday, Wednesday, Friday at 8:00 AM");
 		addNewProgram(testProgram1);
 
@@ -32,6 +32,7 @@ public class ProgramDataBase {
 
 		// Instructor client progress tracking*************
 		ProgramDataBase.getProgram("100001").setSessionsCount(5);
+		ProgramDataBase.getProgram("100001").addClient("client123");
 		ProgramDataBase.getProgram("100001").addClient("client790");
 		ProgramDataBase.getProgram("100001").addClient("client791");
 		ProgramDataBase.getProgram("100001").addClient("client792");
@@ -45,6 +46,7 @@ public class ProgramDataBase {
 		// added to test enrollment count
 		Program testProgram3 = new Program("Cardio Blast", "20 hours", "Intermediate", "Endurance", "instructor14",
 				"100002");
+		testProgram3.addClient("client123");
 		testProgram3.addClient("client102");
 		testProgram3.addClient("client103");
 		testProgram3.addClient("client104");
@@ -109,6 +111,31 @@ public class ProgramDataBase {
 				return true;
 		return false;
 
+	}
+
+	public static boolean programExist(String programId, String instructorId) {
+		for (Program p : programsList)
+			if (p.getProgramId().equals(programId)) {
+				if (p.getInstructorId().equals(instructorId)) {
+					System.out.println("Program exists");
+					return true;
+				} else {
+					System.out.println("you dont have access to this program");
+					return false;
+				}
+			}
+
+		return false;
+	}
+
+	public static ArrayList<Program> getProgramsForInstructor(String id) {
+		ArrayList<Program> programs = new ArrayList<>();
+		for (Program p : programsList) {
+			if (p.getInstructorId().equals(id)) {
+				programs.add(p);
+			}
+		}
+		return programs;
 	}
 
 	public static boolean checkIfApplicable(String price) {
@@ -278,7 +305,7 @@ public class ProgramDataBase {
 				System.out.println(p.getTitle() + " program is active and currently and have: "
 						+ p.getEnrolledClientCount() + " clients enrolled");
 	}
-	
+
 	public static boolean isProgramCreated() {
 		return programCreated;
 	}

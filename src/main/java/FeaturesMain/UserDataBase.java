@@ -70,6 +70,7 @@ public class UserDataBase {
 
 		User instructorTest = new User("instructor test", "instructor11", "Instructor", "Activated", "123123");
 		usersList.add(instructorTest);
+
 	}
 
 	public static boolean updateUserDetails(String name, String id, String role, String status) {
@@ -158,10 +159,11 @@ public class UserDataBase {
 	}
 
 	// Method to add pending instructor request with string parameters
-	public static boolean addPendingInstructor(String id, String name) {
+	public static boolean addPendingInstructor(String id, String name, String password) {
 		// Create a new user with default status "Pending"
 		User newInstructor = new User(name, id, "Instructor", "Pending");
 		// Add the instructor to the pending list
+		newInstructor.setPassword(password);
 		pendingInstructors.add(newInstructor);
 		System.out.println("Instructor registration request added to pending: " + newInstructor);
 		return true;
@@ -292,6 +294,10 @@ public class UserDataBase {
 		}
 
 		return report.toString();
+	}
+
+	public static ArrayList<User> getPendingInstructors() {
+		return pendingInstructors;
 	}
 
 }
