@@ -3,6 +3,7 @@ package FeaturesMain;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class main {
@@ -15,25 +16,26 @@ public class main {
 		do {
 			System.out.print("Please Enter Your ID: ");
 			id = scanner.nextLine();
-			if (!UserDataBase.userExist(id))
+			if (!UserDataBase.userExist(id)) {
 				System.out.println("Please Enter A Valid ID!!!");
-			else {
+			} else {
 				System.out.print("Please Enter Your Password: ");
 				pass = scanner.nextLine();
-				if (!UserDataBase.getUser(id).getPassword().equals(pass))
+				if (!UserDataBase.getUser(id).getPassword().equals(pass)) {
 					System.out.println("Wrong Credentials !!!");
-				else {
+				} else {
+					String userId = id; // Capture the logged-in user ID
 					switch (UserDataBase.getUser(id).getRole()) {
 					case "Admin":
 						AdminMenu();
 						break;
 
 					case "Instructor":
-						InstructorMenu();
+						InstructorMenu(userId);
 						break;
 
 					case "Client":
-						ClientMenu();
+						ClientMenu(userId);
 						break;
 
 					default:
@@ -418,7 +420,6 @@ public class main {
 
 	private static void createNewSubscriptionPlan() {
 		Scanner scanner = new Scanner(System.in);
-
 		System.out.print("Enter tier: ");
 		String tier = scanner.nextLine();
 		System.out.print("Enter price: ");
@@ -439,7 +440,7 @@ public class main {
 
 	private static void updateSubscriptionPlan() {
 		Scanner scanner = new Scanner(System.in);
-
+		printTiers();
 		System.out.print("Enter tier of the plan to update: ");
 		String tier = scanner.nextLine();
 		System.out.print("Enter new price: ");
@@ -475,7 +476,7 @@ public class main {
 
 	private static void deleteSubscriptionPlan() {
 		Scanner scanner = new Scanner(System.in);
-
+		printTiers();
 		System.out.print("Enter tier of the plan to delete: ");
 		String tier = scanner.nextLine();
 
@@ -486,9 +487,20 @@ public class main {
 			System.out.println("Failed to delete the subscription plan.");
 		}
 	}
-//***************************************Instructor Menu*************************************************
 
-	private static void InstructorMenu() {
+	public static void printTiers() {
+		System.out.println("Available Plans:");
+		HashSet<String> uniqueTiers = new HashSet<>();
+		for (Subscription s : SubsDataBase.getAllSubscriptionPlans()) {
+			uniqueTiers.add(s.getTier());
+		}
+		for (String tier : uniqueTiers) {
+			System.out.println(tier);
+		}
+	}
+
+//***************************************Instructor Menu*************************************************
+	private static void InstructorMenu(String instructorId) {
 		Scanner scanner = new Scanner(System.in);
 		boolean logged = true;
 
@@ -511,19 +523,19 @@ public class main {
 				break;
 
 			case 2:
-				InstructorClientInteraction();
+				InstructorClientInteraction(instructorId);
 				break;
 
 			case 3:
-				InstructorProgramManagement();
+				InstructorProgramManagement(instructorId);
 				break;
 
 			case 4:
-				InstructorProgressTracking();
+				InstructorProgressTracking(instructorId);
 				break;
 
 			case 5:
-				InstructorNotificationsAndUpdates();
+				InstructorNotificationsAndUpdates(instructorId);
 				break;
 
 			case 6:
@@ -553,36 +565,187 @@ public class main {
 
 		try {
 			URL url = new URL(urlString);
-			ArticlesDataBase.addArticle(id, title, url);
+			ArticlesDataBase.addArticle(id, title, url); // Use instructorId for tracking
 			System.out.println("Article submitted successfully and is pending approval.");
 		} catch (MalformedURLException e) {
 			System.err.println("Invalid URL format. Please try again.");
 		}
 	}
 
-	private static void InstructorNotificationsAndUpdates() {
+	private static void InstructorNotificationsAndUpdates(String instructorId) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void InstructorProgressTracking() {
+	private static void InstructorProgressTracking(String instructorId) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void InstructorProgramManagement() {
+	private static void InstructorProgramManagement(String instructorId) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private static void InstructorClientInteraction() {
+	private static void InstructorClientInteraction(String instructorId) {
 		// TODO Auto-generated method stub
 
 	}
 
 //***************************************Client Menu*****************************************************
-	private static void ClientMenu() {
-		// Client menu functionality not implemented yet.
+	private static void ClientMenu(String userId) {
+		Scanner scanner = new Scanner(System.in);
+		boolean logged = true;
+
+		while (logged) {
+			System.out.println("\n--- Client Features ---");
+			System.out.println("1. Account Management");
+			System.out.println("2. Program Exploration");
+			System.out.println("3. Progress Tracking");
+			System.out.println("4. Provide Feedback");
+			System.out.println("5. Program Review");
+			System.out.println("6. Logout");
+			System.out.print("Please select an option: ");
+
+			int choice = scanner.nextInt();
+			scanner.nextLine();
+
+			switch (choice) {
+			case 1:
+				ClientAccountManagement(userId);
+				break;
+
+			case 2:
+				ClientProgramExploration();
+				break;
+
+			case 3:
+				ClientProgressTracking();
+				break;
+
+			case 4:
+				ClientProvideFeedback();
+				break;
+
+			case 5:
+				ClientProgramReview();
+				break;
+
+			case 6:
+				System.out.println("Logging out...");
+				logged = false;
+				break;
+
+			default:
+				System.out.println("Invalid option. Please try again.");
+				break;
+			}
+		}
+	}
+
+	private static void ClientAccountManagement(String userId) {
+		Scanner scanner = new Scanner(System.in);
+		boolean managingAccount = true;
+
+		while (managingAccount) {
+			System.out.println("\n--- Client Account Management ---");
+			System.out.println("1. Create Profile");
+			System.out.println("2. Update Profile");
+			System.out.println("3. Delete Profile");
+			System.out.println("4. View Profile");
+			System.out.println("5. Back to Main Menu");
+			System.out.print("Please select an option: ");
+
+			int choice = scanner.nextInt();
+			scanner.nextLine(); // Consume newline
+
+			switch (choice) {
+			case 1:
+				System.out.print("Enter your age: ");
+				String age = scanner.nextLine();
+
+				System.out.print("Enter your fitness goal (e.g., weight in kg): ");
+				int goal = scanner.nextInt();
+				scanner.nextLine(); // Consume newline
+
+				System.out.print("Enter your dietary preference (e.g., LOW_FAT, HIGH_PROTEIN): ");
+				String diet = scanner.nextLine();
+
+				boolean profileCreated = ProfileDataBase.addProfile(userId, age, goal, diet);
+				if (profileCreated) {
+					System.out.println("Profile created successfully.");
+				} else {
+					System.out.println("Failed to create profile. Please try again.");
+				}
+				break;
+
+			case 2:
+				System.out.print("Enter your new age: ");
+				String newAge = scanner.nextLine();
+
+				System.out.print("Enter your new fitness goal (e.g., weight in kg): ");
+				int newGoal = scanner.nextInt();
+				scanner.nextLine(); // Consume newline
+
+				System.out.print("Enter your new dietary preference (e.g., LOW_FAT, HIGH_PROTEIN): ");
+				String newDiet = scanner.nextLine();
+
+				boolean profileUpdated = ProfileDataBase.updateProfile(userId, newAge, newGoal, newDiet);
+				if (profileUpdated) {
+					System.out.println("Profile updated successfully.");
+				} else {
+					System.out.println("Failed to update profile. Please try again.");
+				}
+				break;
+
+			case 3:
+				boolean profileDeleted = ProfileDataBase.deleteProfile(userId);
+				if (profileDeleted) {
+					System.out.println("Profile deleted successfully.");
+				} else {
+					System.out.println("Failed to delete profile. Please try again.");
+				}
+				break;
+
+			case 4:
+				ClientProfile profile = UserDataBase.getUser(userId).getProfile();
+				if (profile != null) {
+					System.out.println("\n--- Profile Details ---");
+					System.out.println("Age: " + profile.getAge());
+					System.out.println("Goal: " + profile.getGoal());
+					System.out.println("Dietary Preference: " + profile.getDiet());
+				} else {
+					System.out.println("No profile found for the user.");
+				}
+				break;
+
+			case 5:
+				System.out.println("Returning to the main menu...");
+				managingAccount = false;
+				break;
+
+			default:
+				System.out.println("Invalid option. Please try again.");
+				break;
+			}
+		}
+	}
+
+	// Placeholder implementations for other client features
+	private static void ClientProgramExploration() {
+		System.out.println("\n--- Client Program Exploration ---");
+	}
+
+	private static void ClientProgressTracking() {
+		System.out.println("\n--- Client Progress Tracking ---");
+	}
+
+	private static void ClientProvideFeedback() {
+		System.out.println("\n--- Provide Feedback ---");
+	}
+
+	private static void ClientProgramReview() {
+		System.out.println("\n--- Program Review ---");
 	}
 
 }
