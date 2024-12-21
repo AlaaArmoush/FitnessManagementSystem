@@ -224,6 +224,7 @@ public class main {
 	}
 
 	private static void deactivateUser(Scanner scanner) {
+		printUsers();
 		System.out.print("Enter user ID to deactivate: ");
 		String deactivateId = scanner.nextLine();
 		boolean deactivated = UserDataBase.deactivate(deactivateId);
@@ -235,6 +236,7 @@ public class main {
 	}
 
 	private static void updateUserDetails(Scanner scanner) {
+		printUsers();
 		System.out.print("Enter user ID to update: ");
 		String updateId = scanner.nextLine();
 		System.out.print("Enter new name: ");
@@ -247,6 +249,12 @@ public class main {
 		} else {
 			System.out.println("Failed to update user account.");
 		}
+	}
+
+	private static void printUsers() {
+		for (User u : UserDataBase.getUsersList())
+			if (!u.getRole().equals("Admin"))
+				System.out.println(u.getID() + " : " + u.getName());
 	}
 
 	private static void addANewUser(Scanner scanner) {
@@ -356,12 +364,11 @@ public class main {
 
 		while (logged) {
 			System.out.println("\n--- Admin Content Management ---");
-			System.out.println("1. Approve a pending article.");
-			System.out.println("2. Reject a pending article.");
-			System.out.println("3. View approved articles.");
-			System.out.println("4. View client feedback.");
-			System.out.println("5. View client program reviews.");
-			System.out.println("6. Back to Admin Menu");
+			System.out.println("1. Show pending articles.");
+			System.out.println("2. View approved articles.");
+			System.out.println("3. View client feedback.");
+			System.out.println("4. View client program reviews.");
+			System.out.println("5. Back to Admin Menu");
 			System.out.print("Please select an option: ");
 
 			int choice = scanner.nextInt();
@@ -369,21 +376,18 @@ public class main {
 
 			switch (choice) {
 			case 1:
-				approvePendingArticle();
+				showPendingArticles();
 				break;
 			case 2:
-				rejectPendingArticle();
-				break;
-			case 3:
 				viewApprovedArticles();
 				break;
-			case 4:
+			case 3:
 				viewClientFeedback();
 				break;
-			case 5:
+			case 4:
 				viewClientProgramReviews();
 				break;
-			case 6:
+			case 5:
 				System.out.println("Returning to Admin Menu...");
 				logged = false;
 				break;
@@ -394,41 +398,48 @@ public class main {
 		}
 	}
 
-	private static void approvePendingArticle() {
+	private static void showPendingArticles() {
 		Scanner scanner = new Scanner(System.in);
 
 		// Display the list of pending articles
 		ArrayList<Article> pendingArticles = ArticlesDataBase.getPendingArticles();
-		if (pendingArticles != null && !pendingArticles.isEmpty()) {
-			System.out.println("\n--- Pending Articles ---");
-			for (Article article : pendingArticles) {
-				System.out.println("Article ID: " + article.getID() + " | Title: " + article.getTitle());
-			}
-
-			System.out.print("Enter article ID to approve: ");
+		if (printPendingArticles(pendingArticles)) {
+			System.out.print("Enter article ID to approve or reject: ");
 			String id = scanner.nextLine();
 
-			if (ArticlesDataBase.approveArticle(id)) {
-				System.out.println("Article approved successfully.");
+			System.out.print("Type 'A' to approve or 'R' to reject: ");
+			String action = scanner.nextLine().toUpperCase();
+
+			if (action.equals("A") || action.equals("a")) {
+				if (ArticlesDataBase.approveArticle(id)) {
+					System.out.println("Article approved successfully.");
+				} else {
+					System.out.println("Failed to approve the article.");
+				}
+			} else if (action.equals("R") || action.equals("r")) {
+				if (ArticlesDataBase.rejectArticle(id)) {
+					System.out.println("Article rejected successfully.");
+				} else {
+					System.out.println("Failed to reject the article.");
+				}
 			} else {
-				System.out.println("Failed to approve the article.");
+				System.out.println("Invalid action. Please enter 'A' to approve or 'R' to reject.");
 			}
 		} else {
 			System.out.println("No pending articles available.");
 		}
 	}
 
-	private static void rejectPendingArticle() {
-		Scanner scanner = new Scanner(System.in);
-
-		System.out.print("Enter article ID to reject: ");
-		String id = scanner.nextLine();
-
-		if (ArticlesDataBase.rejectArticle(id)) {
-			System.out.println("Article rejected successfully.");
-		} else {
-			System.out.println("Failed to reject the article.");
+	// Helper method to print pending articles
+	private static boolean printPendingArticles(ArrayList<Article> pendingArticles) {
+		if (pendingArticles != null && !pendingArticles.isEmpty()) {
+			System.out.println("\n--- Pending Articles ---");
+			for (Article article : pendingArticles) {
+				System.out.println("Article ID: " + article.getID() + " | Title: " + article.getTitle());
+			}
+			return true;
 		}
+		return false;
 	}
 
 	private static void viewApprovedArticles() {
