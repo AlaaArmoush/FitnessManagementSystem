@@ -45,6 +45,7 @@ public class main {
 		if (id != null) {
 			String pass = getPassword(scanner);
 			if (UserDataBase.getUser(id).getPassword().equals(pass)) {
+				System.out.println("Welcome " + UserDataBase.getUser(id).getName() + "!");
 				navigateToUserRole(id);
 			} else {
 				System.out.println("Wrong Credentials !!!");
@@ -148,8 +149,7 @@ public class main {
 				break;
 
 			case 5:
-				System.out.println("Logging out...");
-				logged = false;
+				logged = handleLogOut();
 				break;
 
 			default:
@@ -262,12 +262,15 @@ public class main {
 		String name = scanner.nextLine();
 		System.out.print("Enter user ID: ");
 		String id = scanner.nextLine();
+		System.out.print("Enter user password: ");
+		String pass = scanner.nextLine();
 		System.out.print("Enter user role: ");
 		String role = scanner.nextLine();
 		System.out.print("Enter user status: ");
 		String status = scanner.nextLine();
 
 		User newUser = new User(name, id, role, status);
+		newUser.setPassword(pass);
 		boolean userAdded = UserDataBase.addUser(newUser);
 		if (userAdded) {
 			System.out.println("User account created successfully.");
@@ -642,8 +645,7 @@ public class main {
 				break;
 
 			case 6:
-				System.out.println("Logging out...");
-				logged = false;
+				logged = handleLogOut();
 				break;
 
 			default:
@@ -878,8 +880,7 @@ public class main {
 				deleteProgram(instructorId);
 				break;
 			case 5:
-				System.out.println("Logging out...");
-				logged = false;
+				logged = handleLogOut();
 				break;
 			default:
 				System.out.println("Invalid option. Please try again.");
@@ -1386,14 +1387,28 @@ public class main {
 				break;
 
 			case 7:
-				System.out.println("Logging out...");
-				logged = false;
+				logged = handleLogOut();
 				break;
 
 			default:
 				System.out.println("Invalid option. Please try again.");
 				break;
 			}
+		}
+	}
+
+	private static boolean handleLogOut() {
+		boolean logged;
+		System.out.println("Logging out...");
+		ClearConsole();
+		System.out.flush();
+		logged = false;
+		return logged;
+	}
+
+	public static void ClearConsole() {
+		for (int i = 0; i < 100; i++) {
+			System.out.println();
 		}
 	}
 
