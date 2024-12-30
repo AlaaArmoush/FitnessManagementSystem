@@ -3,75 +3,59 @@
   <groupId>Sofware.2024</groupId>
   <artifactId>SoftwareProject2024</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-	
 
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <sonar.organization>intro-to-software-engineering-2024</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  </properties>
 
-<properties>
-     <maven.compiler.source>1.8</maven.compiler.source>
-     <maven.compiler.target>1.8</maven.compiler.target>
-	 <sonar.organization>intro-to-software-engineering-2024</sonar.organization>
-  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-  
-</properties>
-  
-   <dependencies>
-	  <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
-<dependency>
-    <groupId>io.cucumber</groupId>
-    <artifactId>cucumber-junit</artifactId>
-    <version>7.20.1</version>
-    <scope>test</scope>
-</dependency>
-
-
-<dependency>
-    <groupId>io.cucumber</groupId>
-    <artifactId>cucumber-java</artifactId>
-    <version>7.20.1</version>
-</dependency>
-
-<dependency>
-    <groupId>io.cucumber</groupId>
-    <artifactId>cucumber-core</artifactId>
-    <version>7.20.1</version>
-</dependency>
-
-<dependency>
-    <groupId>io.cucumber</groupId>
-    <artifactId>cucumber-picocontainer</artifactId>
-    <version>7.20.1</version>
-</dependency>
-
-	  <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
-<dependency>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.12</version>
-</dependency>
-
-
+  <dependencies>
+    <!-- Cucumber dependencies -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>7.20.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>7.20.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-core</artifactId>
+      <version>7.20.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-picocontainer</artifactId>
+      <version>7.20.1</version>
+    </dependency>
   </dependencies>
-	<plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <executions>
-        <!-- Prepares the property pointing to the JaCoCo runtime agent
-             which is passed as VM argument when Maven the Surefire plugin is executed. -->
-        <execution>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
             <goals>
-                <goal>prepare-agent</goal>
+              <goal>prepare-agent</goal>
             </goals>
-        </execution>
-        <!-- Ensures that the code coverage report is created after
-             all tests have been run. -->
-        <execution>
+          </execution>
+          <execution>
             <id>generate-report</id>
             <phase>verify</phase>
             <goals>
-                <goal>report</goal>
+              <goal>report</goal>
             </goals>
-        </execution>
-    </executions>
-</plugin>
-
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
