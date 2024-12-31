@@ -41,7 +41,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.12</version>
+        <version>0.8.7</version>
         <executions>
           <execution>
             <goals>
@@ -58,8 +58,8 @@
         </executions>
         <configuration>
   <excludes>
-    <exclude>**/FeaturesMain/main.class</exclude> <!-- Exclude the compiled class file -->
-  </excludes>
+          <exclude>**/FeaturesMain/main.class</exclude> <!-- Exclude the compiled class -->
+        </excludes>
 </configuration>
 
 
