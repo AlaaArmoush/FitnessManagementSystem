@@ -56,6 +56,11 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <excludes>
+            <exclude>**/FeaturesMain/main.java</exclude> <!-- Exclude the specific file -->
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>
