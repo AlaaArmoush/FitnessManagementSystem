@@ -57,10 +57,11 @@
           </execution>
         </executions>
         <configuration>
-          <excludes>
-            <exclude>**/FeaturesMain/main.java</exclude> <!-- Exclude the specific file -->
-          </excludes>
-        </configuration>
+  <excludes>
+    <exclude>src/main/java/FeaturesMain/main.java</exclude>
+  </excludes>
+</configuration>
+
       </plugin>
     </plugins>
   </build>
