@@ -56,12 +56,6 @@
           </goals>
         </execution>
       </executions>
-      <configuration>
-        <excludes>
-          <!-- Exclude the main.class file -->
-          <exclude>**/FeaturesMain/main.class</exclude>
-        </excludes>
-      </configuration>
     </plugin>
   </plugins>
 </build>
