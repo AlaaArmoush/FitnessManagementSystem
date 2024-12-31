@@ -58,9 +58,10 @@
         </executions>
         <configuration>
   <excludes>
-    <exclude>src/main/java/FeaturesMain/main.java</exclude>
+    <exclude>**/FeaturesMain/main.class</exclude> <!-- Exclude the compiled class file -->
   </excludes>
 </configuration>
+
 
       </plugin>
     </plugins>
