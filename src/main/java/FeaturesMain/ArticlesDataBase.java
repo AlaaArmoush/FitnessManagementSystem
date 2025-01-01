@@ -47,7 +47,12 @@ public class ArticlesDataBase {
 	public static void openURL(String id) {
 		try {
 			System.out.println("opening url....");
-			Desktop.getDesktop().browse(getArticle(id).getURL().toURI());
+			Article article = getArticle(id);
+			if (article == null) {
+				System.err.println("No Article Found");
+				return;
+			} else
+				Desktop.getDesktop().browse(getArticle(id).getURL().toURI());
 		} catch (Exception e) {
 			System.err.println("Error opening URL in browser: " + e.getMessage());
 		}
