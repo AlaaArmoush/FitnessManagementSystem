@@ -41,6 +41,8 @@ public class PDataBaseExtraCoverageSteps {
 
 	@Given("a program with ID {string} and instructor ID {string} exists in the database")
 	public void a_program_with_id_and_instructor_id_exists_in_the_database(String programId, String instructorId) {
+		boolean exist = ProgramDataBase.programExist(programId, instructorId);
+		assertTrue(exist);
 		if (database == null) {
 			database = new ProgramDataBase();
 		}
