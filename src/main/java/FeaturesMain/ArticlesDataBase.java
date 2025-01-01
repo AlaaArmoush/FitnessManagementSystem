@@ -51,8 +51,8 @@ public class ArticlesDataBase {
 			if (article == null) {
 				System.err.println("No Article Found");
 				return;
-			} else
-				Desktop.getDesktop().browse(getArticle(id).getURL().toURI());
+			}
+			Desktop.getDesktop().browse(article.getURL().toURI());
 		} catch (Exception e) {
 			System.err.println("Error opening URL in browser: " + e.getMessage());
 		}
