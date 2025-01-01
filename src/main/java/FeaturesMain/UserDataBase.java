@@ -215,7 +215,7 @@ public class UserDataBase {
 		// Define the monthly salary for instructors (200 ILS)
 		int instructorSalary = 200;
 
-		long grossRevenue = activeClients * clientSubscription;
+		long grossRevenue = (long) activeClients * clientSubscription;
 
 		long netRevenue = grossRevenue - (activeInstructors * instructorSalary);
 		String report = "-------------------------\n";
