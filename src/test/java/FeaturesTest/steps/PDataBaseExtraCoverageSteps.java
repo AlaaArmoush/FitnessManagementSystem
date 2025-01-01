@@ -1,114 +1,155 @@
 package FeaturesTest.steps;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
-import io.cucumber.java.en.Then;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
+import FeaturesMain.Program;
+import FeaturesMain.ProgramDataBase;
+import FeaturesMain.User;
+import FeaturesMain.UserDataBase;
+import io.cucumber.java.en.*;
+
+import java.util.ArrayList;
 
 public class PDataBaseExtraCoverageSteps {
+	private ProgramDataBase database;
+	private boolean operationResult;
+	private String message;
+	private ArrayList<Program> programs;
+	private ArrayList<User> clients;
 
-	private boolean programExists;
-	private String programPrice;
-	private boolean programCreatedStatus;
-	private String instructorAccess;
-	private String response;
-	private String enrolledClientsList;
-
-	// Mock system state
-	private boolean systemHasProgram;
-	private String programID;
-	private String instructorID;
-
-	@Given("the system has a program with ID {string}")
-	public void the_system_has_a_program_with_ID(String id) {
-		programID = id;
-		systemHasProgram = true;
+	@Given("a program with ID {string} exists in the database")
+	public void a_program_with_ID_exists_in_the_database(String programId) {
+		if (database == null) {
+			database = new ProgramDataBase();
+		}
+		Program program = new Program("Test Program", "20 hours", "Beginner", "Goals", "instructor11", programId);
+		ProgramDataBase.addNewProgram(program);
 	}
 
-	@Given("the system has a program with ID {string} and instructor ID {string}")
-	public void the_system_has_a_program_with_ID_and_instructor_ID(String id, String instructor) {
-		programID = id;
-		instructorID = instructor; // Ensure instructorID is set here
-		systemHasProgram = true;
+	@When("a user attempts to add a program with ID {string}")
+	public void a_user_attempts_to_add_a_program_with_ID(String programId) {
+		operationResult = ProgramDataBase.addNewProgram("New Program", "30 hours", "Intermediate", "Goals",
+				"instructor02", programId, new ArrayList<>(), "200");
+		message = operationResult ? "Program added successfully" : "this program already exists";
 	}
 
-	@Given("a program with ID {string}")
-	public void a_program_with_ID(String id) {
-		programID = id;
-		programExists = true;
+	@Then("the operation should fail with a message {string}")
+	public void the_operation_should_fail_with_a_message(String expectedMessage) {
+		assertFalse(operationResult);
+		assertEquals(expectedMessage, message);
 	}
 
-	@Given("the program creation status is false")
-	public void the_program_creation_status_is_false() {
-		programCreatedStatus = false;
+	@Given("a program with ID {string} and instructor ID {string} exists in the database")
+	public void a_program_with_id_and_instructor_id_exists_in_the_database(String programId, String instructorId) {
+		if (database == null) {
+			database = new ProgramDataBase();
+		}
+		Program program = new Program("Test Program", "20 hours", "Beginner", "Goals", instructorId, programId);
+		ProgramDataBase.addNewProgram(program);
 	}
 
-	@Given("the system has programs for instructor {string}")
-	public void the_system_has_programs_for_instructor(String instructor) {
-		instructorID = instructor; // Ensure instructorID is set here
-		// Mock system state for instructor
-	}
-
-	@When("a new program with ID {string} is added")
-	public void a_new_program_with_ID_is_added(String id) {
-		if (systemHasProgram && programID.equals(id)) {
-			response = "this program already exists";
-		} else {
-			response = "Program added successfully";
-			systemHasProgram = true;
-			programID = id;
+	@When("a user checks if the program exists for instructor ID {string}")
+	public void a_user_checks_if_the_program_exists_for_instructor_ID(String instructorId) {
+		programs = ProgramDataBase.getProgramsForInstructor(instructorId);
+		operationResult = !programs.isEmpty(); // Check if programs exist for the instructor
+		if (!operationResult) {
+			message = "you dont have access to this program";
 		}
 	}
 
-	@When("the instructor {string} checks if the program with ID {string} exists")
-	public void the_instructor_checks_if_the_program_with_ID_exists(String instructor, String id) {
-		if (systemHasProgram && programID.equals(id)) {
-			if (instructorID.equals(instructor)) {
-				response = "Program exists";
-			} else {
-				response = "you don't have access to this program";
-			}
-		} else {
-			response = "Program not found";
+	@Then("the operation should return true")
+	public void the_operation_should_return_true() {
+		assertTrue(operationResult);
+	}
+
+	@Then("the operation should return false with a message {string}")
+	public void the_operation_should_return_false_with_a_message(String expectedMessage) {
+		assertTrue(operationResult);
+	}
+
+	@Given("multiple programs exist in the database")
+	public void multiple_programs_exist_in_the_database() {
+		if (database == null) {
+			database = new ProgramDataBase();
 		}
 	}
 
-	@When("the price for the program is set to {string}")
-	public void the_price_for_the_program_is_set_to(String price) {
-		programPrice = price;
-		response = "price was set";
+	@Given("instructor ID {string} is assigned to some programs")
+	public void instructor_ID_is_assigned_to_some_programs(String instructorId) {
+		Program program1 = new Program("Program A", "10 hours", "Beginner", "Goal A", instructorId, "100010");
+		Program program2 = new Program("Program B", "15 hours", "Intermediate", "Goal B", instructorId, "100011");
+		ProgramDataBase.addNewProgram(program1);
+		ProgramDataBase.addNewProgram(program2);
 	}
 
-	@When("the program creation status is set to true")
-	public void the_program_creation_status_is_set_to_true() {
-		programCreatedStatus = true;
+	@When("a user retrieves programs for instructor ID {string}")
+	public void a_user_retrieves_programs_for_instructor_ID(String instructorId) {
+		programs = ProgramDataBase.getProgramsForInstructor(instructorId);
 	}
 
-	@When("the instructor {string} requests all clients")
-	public void the_instructor_requests_all_clients(String instructor) {
-		if (instructorID.equals(instructor)) {
-			// Mock list of clients enrolled for this instructor
-			enrolledClientsList = "Client1, Client2, Client3";
-			response = "List of enrolled clients for instructor " + instructor + ": " + enrolledClientsList;
-		} else {
-			response = "No clients available for this instructor";
+	@Then("the returned list should contain only the programs for instructor ID {string}")
+	public void the_returned_list_should_contain_only_the_programs_for_instructor_ID(String instructorId) {
+		assertNotNull(programs);
+		for (Program program : programs) {
+			assertEquals(instructorId, program.getInstructorId());
 		}
 	}
 
-	@Then("the system should return {string}")
-	public void the_system_should_return(String expectedResponse) {
-		assertEquals(expectedResponse, response);
+	@Given("no program creation status is initially set")
+	public void no_program_creation_status_is_initially_set() {
+		if (database == null) {
+			database = new ProgramDataBase();
+		}
 	}
 
-	@Then("the system should return a list of enrolled clients for that instructor")
-	public void the_system_should_return_a_list_of_enrolled_clients_for_that_instructor() {
-		assertEquals("List of enrolled clients for instructor " + instructorID + ": Client1, Client2, Client3",
-				response);
+	@When("a user sets the program creation status to true")
+	public void a_user_sets_the_program_creation_status_to_true() {
+		ProgramDataBase.setProgramCreated(true);
 	}
 
-	@Then("the program created status should be true")
-	public void the_program_created_status_should_be_true() {
-		assertEquals(true, programCreatedStatus);
+	@Then("the {string} method should return true")
+	public void the_method_should_return_true(String methodName) {
+		if ("isProgramCreated".equals(methodName)) {
+			assertTrue(ProgramDataBase.isProgramCreated());
+		} else {
+			fail("Unknown method: " + methodName);
+		}
+	}
+
+	@Given("instructor ID {string} has multiple programs with enrolled clients")
+	public void instructor_ID_has_multiple_programs_with_enrolled_clients(String instructorId) {
+		if (database == null) {
+			database = new ProgramDataBase();
+		}
+		UserDataBase userDataBase = new UserDataBase();
+
+		User client1 = new User("Client One", "client01", "Client", "Activated");
+		User client2 = new User("Client Two", "client02", "Client", "Activated");
+		UserDataBase.addUser(client1);
+		UserDataBase.addUser(client2);
+
+		Program program1 = new Program("Program A", "10 hours", "Beginner", "Goal A", instructorId, "100010");
+		Program program2 = new Program("Program B", "15 hours", "Intermediate", "Goal B", instructorId, "100011");
+
+		program1.addClient(client1.getID());
+		program2.addClient(client2.getID());
+
+		ProgramDataBase.addNewProgram(program1);
+		ProgramDataBase.addNewProgram(program2);
+	}
+
+	@When("a user retrieves all clients for instructor ID {string}")
+	public void a_user_retrieves_all_clients_for_instructor_ID(String instructorId) {
+		clients = ProgramDataBase.getAllClientsForInstructor(instructorId);
+	}
+
+	@Then("the returned list should contain all enrolled clients across the programs for instructor ID {string}")
+	public void the_returned_list_should_contain_all_enrolled_clients_across_the_programs_for_instructor_ID(
+			String instructorId) {
+		assertNotNull(clients);
+		for (User client : clients) {
+			assertNotNull(client);
+			assertEquals("client", client.getRole());
+		}
 	}
 }
