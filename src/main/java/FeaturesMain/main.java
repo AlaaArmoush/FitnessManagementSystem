@@ -10,7 +10,6 @@ public class main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Welcome To Our Fitness Management System!");
-
 		boolean isLoggedOut = false;
 		do {
 			int choice = showMainMenu(scanner);
