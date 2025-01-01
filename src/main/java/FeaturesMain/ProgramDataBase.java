@@ -70,7 +70,6 @@ public class ProgramDataBase {
 		boolean attachmentAdded = addAttachmentsToProgram(newProgram, attachments);
 		if (priceSet && attachmentAdded) {
 			addNewProgram(newProgram);
-			// System.out.println("new program added: " + newProgram);
 			programAdded = true;
 		}
 
@@ -101,7 +100,6 @@ public class ProgramDataBase {
 
 		programsList.add(newProgram);
 		usedIds.add(Integer.parseInt(newProgram.getProgramId()));
-		// System.out.println("new program added: " + newProgram);
 		return true;
 	}
 

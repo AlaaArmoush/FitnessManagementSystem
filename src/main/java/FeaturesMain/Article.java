@@ -38,7 +38,7 @@ public class Article {
 		try {
 			this.link = new URL(url);
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.err.println("URL not accepeted");
 		}
 	}
 

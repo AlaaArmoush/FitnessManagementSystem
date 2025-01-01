@@ -135,8 +135,7 @@ public class InboxManagement {
 		boolean sent = false;
 		InboxItem item;
 		Program program = ProgramDataBase.getProgram(programId);
-		String message = String.format("new program announcment: \n" + program);
-
+		String message = String.format("New program announcement: %n%s", program);
 		for (User client : UserDataBase.getUsersList()) {
 			if (client.getRole().equals("Client")) {
 				item = new InboxItem(InboxItemType.Announcement, message, program);
@@ -160,7 +159,7 @@ public class InboxManagement {
 		boolean sent = false;
 		InboxItem item;
 		Program program = ProgramDataBase.getProgram(programId);
-		String message = String.format("special offer on program: \n" + program);
+		String message = String.format("special offer on program: %n%s", program);
 
 		for (User client : UserDataBase.getUsersList()) {
 			if (client.getRole().equals("Client")) {
