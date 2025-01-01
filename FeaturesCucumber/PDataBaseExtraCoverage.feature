@@ -1,31 +1,32 @@
-Feature: Program Management
+Feature: Program Data Base Extra Coverage
 
-  Scenario: Check if a program already exists when adding a new program
-    Given the system has a program with ID "100000"
-    When a new program with ID "100000" is added
-    Then the system should return "this program already exists"
+  Scenario: Check for existing program by ID
+    Given a program with ID "100001" exists in the database
+    When a user attempts to add a program with ID "100001"
+    Then the operation should fail with a message "this program already exists"
 
-  Scenario: Check program existence with instructor access
-    Given the system has a program with ID "100000" and instructor ID "instructor13"
-    When the instructor "instructor13" checks if the program with ID "100000" exists
-    Then the system should return "Program exists"
+  Scenario: Verify program existence for a specific instructor
+    Given a program with ID "100001" and instructor ID "instructor11" exists in the database
+    When a user checks if the program exists for instructor ID "instructor11"
+    Then the operation should return true
 
-  Scenario: Check program existence without instructor access
-    Given the system has a program with ID "100000" and instructor ID "instructor13"
-    When the instructor "instructor14" checks if the program with ID "100000" exists
-    Then the system should return "you don't have access to this program"
+  Scenario: Verify program existence for a different instructor
+    Given a program with ID "100001" and instructor ID "instructor11" exists in the database
+    When a user checks if the program exists for instructor ID "instructor12"
+    Then the operation should return false with a message "you dont have access to this program"
 
-  Scenario: Set price for a program
-    Given a program with ID "100000"
-    When the price for the program is set to "200NIS"
-    Then the system should return "price was set"
+  Scenario: Retrieve programs for an instructor
+    Given multiple programs exist in the database
+    And instructor ID "instructor13" is assigned to some programs
+    When a user retrieves programs for instructor ID "instructor13"
+    Then the returned list should contain only the programs for instructor ID "instructor13"
 
-  Scenario: Set program created status
-    Given the program creation status is false
-    When the program creation status is set to true
-    Then the program created status should be true
+  Scenario: Check and update program creation status
+    Given no program creation status is initially set
+    When a user sets the program creation status to true
+    Then the "isProgramCreated" method should return true
 
-  Scenario: Get all clients for a given instructor
-    Given the system has programs for instructor "instructor13"
-    When the instructor "instructor13" requests all clients
-    Then the system should return a list of enrolled clients for that instructor
+  Scenario: Retrieve all clients for an instructor
+    Given instructor ID "instructor13" has multiple programs with enrolled clients
+    When a user retrieves all clients for instructor ID "instructor13"
+    Then the returned list should contain all enrolled clients across the programs for instructor ID "instructor13"
