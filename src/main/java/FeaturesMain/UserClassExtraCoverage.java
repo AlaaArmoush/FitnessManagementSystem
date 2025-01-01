@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.cucumber.java.AfterAll;
-import io.cucumber.java.BeforeAll;
 
 class UserClassExtraCoverage {
 
