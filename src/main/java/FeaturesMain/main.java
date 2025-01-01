@@ -693,13 +693,13 @@ public class main {
 
 			switch (choice) {
 			case 1:
-				updateProgramSchedule(scanner);
+				updateProgramSchedule(scanner, instructorId);
 				break;
 			case 2:
 				createNewProgram(instructorId, scanner);
 				break;
 			case 3:
-				updateProgramPrice(scanner);
+				updateProgramPrice(scanner, instructorId);
 				break;
 			case 4:
 				running = false;
@@ -710,8 +710,8 @@ public class main {
 		}
 	}
 
-	private static void updateProgramSchedule(Scanner scanner) {
-		printPrograms();
+	private static void updateProgramSchedule(Scanner scanner, String instructorId) {
+		printPrograms(instructorId);
 		System.out.print("Enter Program ID to update the schedule: ");
 		String programId = scanner.nextLine();
 		System.out.print("Enter new schedule details: ");
@@ -760,8 +760,8 @@ public class main {
 		}
 	}
 
-	private static void updateProgramPrice(Scanner scanner) {
-		printPrograms();
+	private static void updateProgramPrice(Scanner scanner, String instructorId) {
+		printPrograms(instructorId);
 		System.out.print("Enter Program ID to update the price: ");
 		String programId = scanner.nextLine();
 		System.out.print("Enter new price: ");
@@ -795,10 +795,10 @@ public class main {
 
 			switch (choice) {
 			case 1:
-				viewClientProgress(scanner);
+				viewClientProgress(scanner, instructorId);
 				break;
 			case 2:
-				sendMotivationalReminder(scanner);
+				sendMotivationalReminder(scanner, instructorId);
 				break;
 			case 3:
 				running = false;
@@ -809,8 +809,8 @@ public class main {
 		}
 	}
 
-	private static void viewClientProgress(Scanner scanner) {
-		printPrograms();
+	private static void viewClientProgress(Scanner scanner, String instructorId) {
+		printPrograms(instructorId);
 		System.out.print("Enter Program ID to view client progress: ");
 		String programId = scanner.nextLine();
 
@@ -827,8 +827,16 @@ public class main {
 		}
 	}
 
-	private static void sendMotivationalReminder(Scanner scanner) {
-		printPrograms();
+	private static void printPrograms(String instructorId) {
+		ArrayList<Program> instructorPrograms = ProgramDataBase.getProgramsForInstructor(instructorId);
+		for (Program p : instructorPrograms)
+			System.out.println(p.getProgramId() + " : " + p.getTitle());
+		System.out.print("Enter the Program ID: ");
+
+	}
+
+	private static void sendMotivationalReminder(Scanner scanner, String instructorId) {
+		printPrograms(instructorId);
 		System.out.print("Enter Program ID to send motivational reminder: ");
 		String programId = scanner.nextLine();
 
@@ -859,7 +867,7 @@ public class main {
 			System.out.println("2. Add new program");
 			System.out.println("3. Edit program details, price, attachments or schedule");
 			System.out.println("4. Delete program");
-			System.out.println("5. log out");
+			System.out.println("5. Main menu");
 			System.out.print("Please select an option: ");
 
 			int choice = scanner.nextInt();
@@ -931,6 +939,7 @@ public class main {
 	}
 
 	private static void displayInstructorsPrograms(String instructorId) {
+		System.out.println(instructorId);
 		ArrayList<Program> instructorPrograms = ProgramDataBase.getProgramsForInstructor(instructorId);
 		if (instructorPrograms.isEmpty()) {
 			System.out.println("No Programs Found");
@@ -942,16 +951,16 @@ public class main {
 
 	private static void addNewProgram(String instructorId) {
 		Scanner scanner = new Scanner(System.in);
-		Program newProgram = gatherProgramDetails(scanner);
+		Program newProgram = gatherProgramDetails(scanner, instructorId);
 		String price = gatherProgramPrice(scanner);
-
+		newProgram.setInstructorId(instructorId);
 		newProgram.setPrice(price);
 		setProgramSchedule(scanner, newProgram);
-
+		System.out.println("program added");
 		ProgramDataBase.addNewProgram(newProgram);
 	}
 
-	private static Program gatherProgramDetails(Scanner scanner) {
+	private static Program gatherProgramDetails(Scanner scanner, String instructorId) {
 		System.out.println("\n--- Create A New Program ---");
 		String title = getInput("Enter program title: ");
 		String durationTime = getInput("Enter program duration time: ");
@@ -959,7 +968,7 @@ public class main {
 		String difficulty = getValidDifficultyLevel(scanner);
 
 		ArrayList<Attachment> programAttachments = gatherProgramAttachments(scanner);
-		Program newProgram = new Program(title, durationTime, difficulty, goal, "instructorId");
+		Program newProgram = new Program(title, durationTime, difficulty, goal, instructorId);
 		newProgram.setAttachments(programAttachments);
 		return newProgram;
 	}
