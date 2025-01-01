@@ -12,6 +12,19 @@
   </properties>
 
   <dependencies>
+	  <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.7.2</version> <!-- Use the version appropriate for your setup -->
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.7.2</version> <!-- Use the version appropriate for your setup -->
+        <scope>test</scope>
+    </dependency>
+	  
     <!-- Cucumber dependencies -->
     <dependency>
       <groupId>io.cucumber</groupId>
