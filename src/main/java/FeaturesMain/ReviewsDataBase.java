@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class ReviewsDataBase {
 	private static ArrayList<Review> reviewsList = new ArrayList<>();
 	private static ArrayList<Feedback> feedbackList = new ArrayList<>();
+	
+	private ReviewsDataBase() {
+		
+	}
 
 	static {
 		// Adding sample reviews

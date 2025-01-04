@@ -1,10 +1,15 @@
 package FeaturesMain;
 
 public class ProfileDataBase {
+	
+	private ProfileDataBase() {
+		
+	}
 
 	public static boolean addProfile(String clientID, String age, int goal, String diet) {
 		// Retrieve the user from UserDataBase
 		User user = UserDataBase.getUser(clientID);
+		
 
 		if (user != null && user.getProfile() == null) {
 			try {
