@@ -240,6 +240,15 @@ public class User {
 
 	}
 
+	public ProgramAttendence getAttendence(String programId) {
+		for (ProgramAttendence attendance : attendence) {
+			if (attendance.getProgram().getProgramId().equals(programId)) {
+				return attendance;
+			}
+		}
+		return null;
+	}
+
 	public int getAttendence(Program program) {
 		int t = 0;
 		for (ProgramAttendence pe : attendence) {
