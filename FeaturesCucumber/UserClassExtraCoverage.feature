@@ -27,3 +27,9 @@ Feature: User Class Extra Coverage
 
     When the user increments their pro count again
     Then the user should have earned the "RISING_STAR" badge
+
+ 
+Scenario: User is marked absent for a program and the absence count updates
+Given a user is enrolled in a program with ID "100001" and 0 absences
+When the user is marked absent for the program with ID "100000"
+Then the absence count for the program with ID "100001" should be 1

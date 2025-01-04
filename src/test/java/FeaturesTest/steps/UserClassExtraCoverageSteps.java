@@ -10,6 +10,7 @@ import FeaturesMain.AchievementBadge;
 import FeaturesMain.InboxItem;
 import FeaturesMain.InboxItemType;
 import FeaturesMain.Program;
+import FeaturesMain.ProgramAttendence;
 import FeaturesMain.ProgramDataBase;
 import FeaturesMain.User;
 import io.cucumber.java.en.Given;
@@ -91,6 +92,37 @@ public class UserClassExtraCoverageSteps {
 	public void the_user_should_have_earned_the_next_badge() {
 		ArrayList<AchievementBadge> badges = user.getEarnedBadges();
 		assertTrue(badges.contains(AchievementBadge.RISING_STAR));
+	}
+
+	@Given("a user is enrolled in a program with ID {string} and {int} absences")
+	public void givenUserIsEnrolledInProgramWithIDAndAbsences(String programId, int initialAbsences) {
+		Program program = ProgramDataBase.getProgram(programId);
+
+		if (program == null) {
+			throw new NullPointerException("Program with ID " + programId + " not found.");
+		}
+
+		ProgramAttendence attendance = new ProgramAttendence(program);
+		attendance.setAbsent(initialAbsences);
+
+		user = new User("Test User", "T001", "client", "active", "password123", 0);
+		user.addProgram(program);
+
+		user.setAbsent(programId);
+	}
+
+	@When("the user is marked absent for the program with ID {string}")
+	public void whenUserIsMarkedAbsentForProgramWithID(String programId) {
+		user.setAbsent(programId);
+	}
+
+	@Then("the absence count for the program with ID {string} should be {int}")
+	public void thenAbsenceCountForProgramWithIDShouldBe(String programId, int expectedAbsences) {
+		ProgramAttendence attendance = user.getAttendence(programId);
+		if (attendance == null) {
+			throw new AssertionError("Program with ID " + programId + " not found in user's attendances.");
+		}
+		assertEquals(expectedAbsences, attendance.getAbsent().intValue());
 	}
 
 }
