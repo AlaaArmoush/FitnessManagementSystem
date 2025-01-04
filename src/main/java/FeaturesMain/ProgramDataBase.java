@@ -13,7 +13,6 @@ public class ProgramDataBase {
 
 	private static boolean lastUpdate;
 	private static boolean programCreated;
-	
 
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",
@@ -22,6 +21,7 @@ public class ProgramDataBase {
 		testProgram1.addClient("client456");
 		testProgram1.addClient("client123");
 		testProgram1.setGroupSession("Morning Session", "Monday, Wednesday, Friday at 8:00 AM");
+		testProgram1.setStaus(1);
 		addNewProgram(testProgram1);
 
 		Program testProgram2 = new Program("yoga", "40 hours", "Beginners", "flexibility", "instructor11", "100001");
@@ -29,6 +29,7 @@ public class ProgramDataBase {
 		testProgram2.addClient("client789");
 		testProgram2.addClient("client101");
 		testProgram2.addClient("client102");
+		testProgram2.setStaus(1);
 		addNewProgram(testProgram2);
 
 		// Instructor client progress tracking*************
@@ -52,6 +53,7 @@ public class ProgramDataBase {
 		testProgram3.addClient("client103");
 		testProgram3.addClient("client104");
 		testProgram3.addClient("client105");
+		testProgram3.setStaus(1);
 		addNewProgram(testProgram3);
 
 	}
