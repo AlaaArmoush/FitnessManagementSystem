@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class SubsDataBase {
 	private static ArrayList<Subscription> subsList = new ArrayList<>();
+	
+	private SubsDataBase() {
+		
+	}
 
 	static {
 		Subscription testSub = new Subscription("Basic", "100ILS", "10%", "20");

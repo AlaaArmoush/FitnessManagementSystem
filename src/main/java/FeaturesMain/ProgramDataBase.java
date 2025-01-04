@@ -13,6 +13,7 @@ public class ProgramDataBase {
 
 	private static boolean lastUpdate;
 	private static boolean programCreated;
+	
 
 	static {
 		Program testProgram1 = new Program("Lower Body Work Out", "30 hours", "Beginners", "goal", "instructor13",

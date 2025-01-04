@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class UserDataBase {
 	private static ArrayList<User> usersList = new ArrayList<>();
 	private static ArrayList<User> pendingInstructors = new ArrayList<>();
+	
+	private UserDataBase() {
+		
+	}
 
 	// default test user
 	static {

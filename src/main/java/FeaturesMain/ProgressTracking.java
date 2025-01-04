@@ -4,6 +4,10 @@ public class ProgressTracking {
 	
 	private static boolean lastInteraction;
 	
+	private ProgressTracking() {
+		
+	}
+	
 	public static boolean displayClientsProgress(String programId) {
 		boolean displayed = false;
 		Program temp = ProgramDataBase.getProgram(programId);

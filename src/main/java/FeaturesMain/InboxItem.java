@@ -1,12 +1,15 @@
 package FeaturesMain;
 
+
+
 public class InboxItem {
 
 	private InboxItemType type; // direct message, updates notification, recommendation or reminder
 	private String senderId;
 	private String message;
 	private Program program; // for attendance notification
-
+	
+	 
 	public InboxItem(InboxItemType type, String senderId, String message) {
 		this.type = type;
 		this.senderId = senderId;
