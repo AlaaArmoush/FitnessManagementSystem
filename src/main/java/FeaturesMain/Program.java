@@ -18,6 +18,10 @@ public class Program {
 	private Integer sessionsCount;
 	private Integer targetedHours;
 
+	public Program() {
+		this("Default Title", "Default Duration", "Default Difficulty", "Default Goals");
+	}
+
 	public Program(String title, String durationTime, String difficultyLevel, String goals, String instructorId) {
 		this(title, durationTime, difficultyLevel, goals, null, null);
 		String id = ProgramDataBase.generateProgramId();
