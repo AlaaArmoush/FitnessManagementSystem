@@ -1,12 +1,17 @@
 package FeaturesTest.steps;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
 
 import FeaturesMain.Article;
 import FeaturesMain.Attachment;
 import FeaturesMain.InboxItem;
 import FeaturesMain.InboxItemType;
 import FeaturesMain.Program;
+import FeaturesMain.ProgramDataBase;
 import FeaturesMain.Review;
 import FeaturesMain.Session;
 import io.cucumber.java.en.*;
@@ -18,6 +23,7 @@ public class LeftOversExtraCoverageSteps {
 	private Program program;
 	private Attachment attachment;
 	private InboxItem inboxItem;
+	private ArrayList<Program> programsList;
 
 	@Given("an article")
 	public void an_article() {
@@ -151,6 +157,56 @@ public class LeftOversExtraCoverageSteps {
 	@Then("the attachment path should be {string}")
 	public void the_attachment_path_should_be(String string) {
 		assertEquals(string, attachment.getPath());
+	}
+
+	@Given("a list of programs")
+	public void aListOfPrograms() {
+		programsList = ProgramDataBase.getProgramsList();
+	}
+
+	@And("a program with ID {string} exists in the list")
+	public void aProgramWithIDExistsInTheList(String programId) {
+		boolean exists = false;
+		for (Program p : programsList) {
+			if (p.getProgramId().equals(programId)) {
+				exists = true;
+				break;
+			}
+		}
+		assertTrue("Program with ID " + programId + " should exist in the list", exists);
+	}
+
+	@When("the program is searched by ID {string}")
+	public void theProgramIsSearchedByID(String programId) {
+		program = ProgramDataBase.findProgramById(programId);
+	}
+
+	@Then("the program should be found")
+	public void theProgramShouldBeFound() {
+		assertNotNull("Program should be found", program);
+	}
+
+	@And("the programID should be {string}")
+	public void theProgramIDShouldBe(String expectedId) {
+		assertEquals("Program ID should match", expectedId, program.getProgramId());
+	}
+
+	@Given("a program with title {string}")
+	public void a_program_with_title(String title) {
+		program = new Program("101", title, "1 hour", "Beginner", "Learn Basics");
+		ProgramDataBase.addNewProgram(program);
+	}
+
+	@When("the title is updated to {string}")
+	public void the_title_is_updated_to(String newTitle) {
+		boolean updated = ProgramDataBase.updateFieldIfDifferent("Title", program.getTitle(), newTitle,
+				program::setTitle);
+		assertTrue("Title should be updated", updated);
+	}
+
+	@Then("the title should be updated to {string}")
+	public void the_title_should_be_updated_to(String expectedTitle) {
+		assertEquals("The title should match the updated value", expectedTitle, program.getTitle());
 	}
 
 }
