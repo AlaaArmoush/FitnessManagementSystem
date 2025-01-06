@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import FeaturesMain.Article;
 import FeaturesMain.Attachment;
 import FeaturesMain.InboxItem;
-import FeaturesMain.InboxItemType;
 import FeaturesMain.Program;
 import FeaturesMain.ProgramDataBase;
 import FeaturesMain.Review;
@@ -22,7 +21,6 @@ public class LeftOversExtraCoverageSteps {
 	private Review review;
 	private Program program;
 	private Attachment attachment;
-	private InboxItem inboxItem;
 	private ArrayList<Program> programsList;
 
 	@Given("an article")
