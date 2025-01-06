@@ -48,3 +48,14 @@ Feature: LeftOvers Extra Coverage
     Then the attachment type should be "Image"
     And the attachment path should be "/images/sample.jpg"
 
+  Scenario: Find Program by ID
+    Given a list of programs
+    And a program with ID "100001" exists in the list
+    When the program is searched by ID "100001"
+    Then the program should be found
+    And the programID should be "100001"
+
+  Scenario: Update Field If Different
+    Given a program with title "Old Title"
+    When the title is updated to "New Title"
+    Then the title should be updated to "New Title"

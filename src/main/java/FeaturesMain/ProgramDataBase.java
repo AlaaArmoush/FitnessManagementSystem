@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class ProgramDataBase {
 
@@ -151,35 +152,40 @@ public class ProgramDataBase {
 	public static boolean updateProgramDetails(String title, String durationTime, String difficultyLevel, String goals,
 			String programId) {
 		boolean updated = false;
-		for (Program p : programsList) {
-			if (p.getProgramId().equals(programId)) {
-				System.out.println("updating details");
 
-				if (!p.getTitle().equals(title)) {
-					p.setTitle(title);
-					updated = true;
-				}
-				if (!p.getDurationTime().equals(durationTime)) {
-					p.setDurationTime(durationTime);
-					updated = true;
-				}
-				if (!p.getdifficultyLevel().equals(difficultyLevel)) {
-					p.setdifficultyLevel(difficultyLevel);
-					updated = true;
-				}
-				if (!p.getGoals().equals(goals)) {
-					p.setGoals(goals);
-					updated = true;
-				}
-				if (updated) {
-					System.out.println("Program details updated: " + p);
-				}
+		Program programToUpdate = findProgramById(programId);
+		if (programToUpdate != null) {
+			updated |= updateFieldIfDifferent("Title", programToUpdate.getTitle(), title, programToUpdate::setTitle);
+			updated |= updateFieldIfDifferent("Duration Time", programToUpdate.getDurationTime(), durationTime,
+					programToUpdate::setDurationTime);
+			updated |= updateFieldIfDifferent("Difficulty Level", programToUpdate.getdifficultyLevel(), difficultyLevel,
+					programToUpdate::setdifficultyLevel);
+			updated |= updateFieldIfDifferent("Goals", programToUpdate.getGoals(), goals, programToUpdate::setGoals);
+
+			if (updated) {
+				System.out.println("Program details updated: " + programToUpdate);
 			}
 		}
-
-		lastUpdate = updated;
 		return updated;
+	}
 
+	public static Program findProgramById(String programId) {
+		for (Program p : programsList) {
+			if (p.getProgramId().equals(programId)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public static boolean updateFieldIfDifferent(String fieldName, String currentValue, String newValue,
+			Consumer<String> updateAction) {
+		if (!currentValue.equals(newValue)) {
+			updateAction.accept(newValue);
+			System.out.println(fieldName + " updated to: " + newValue);
+			return true;
+		}
+		return false;
 	}
 
 	public static boolean updateAttachments(ArrayList<Attachment> attachments, String programID) {

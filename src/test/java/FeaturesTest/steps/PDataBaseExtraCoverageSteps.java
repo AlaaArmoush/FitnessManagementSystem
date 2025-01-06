@@ -123,7 +123,6 @@ public class PDataBaseExtraCoverageSteps {
 		if (database == null) {
 			database = new ProgramDataBase();
 		}
-		UserDataBase userDataBase = new UserDataBase();
 
 		User client1 = new User("Client One", "client01", "Client", "Activated");
 		User client2 = new User("Client Two", "client02", "Client", "Activated");
