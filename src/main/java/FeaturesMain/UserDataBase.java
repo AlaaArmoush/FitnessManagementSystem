@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class UserDataBase {
 	private static ArrayList<User> usersList = new ArrayList<>();
 	private static ArrayList<User> pendingInstructors = new ArrayList<>();
-	
+
 	public UserDataBase() {
-		
+
 	}
 
 	// default test user
@@ -171,6 +171,17 @@ public class UserDataBase {
 		pendingInstructors.add(newInstructor);
 		System.out.println("Instructor registration request added to pending: " + newInstructor);
 		return true;
+	}
+
+	public static boolean rejectInstructorRequest(String id) {
+		for (User u : pendingInstructors) {
+			if (u.getID().equals(id)) {
+				pendingInstructors.remove(u);
+				System.out.println("Instructor registration rejected: " + u);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Method to approve pending instructor and activate their account

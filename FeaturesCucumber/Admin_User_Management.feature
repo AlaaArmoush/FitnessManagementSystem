@@ -31,3 +31,10 @@ Feature: Admin User Management
 	  Given I am logged in as an admin id "admin123" password "1001"
     When I view user activity and engagement statistics
     Then I should see detailed metrics for both clients and instructors
+
+  Scenario: Reject pending instructor registration request
+    Given I am logged in as an admin id "admin123" password "1001"
+    And there is a pending instructor registration request with id "2342004"
+    When I reject the registration request
+    Then the instructor account should be removed from the pending list
+    

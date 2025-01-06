@@ -1,6 +1,9 @@
 package FeaturesTest.steps;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import FeaturesMain.MyApplication;
 import FeaturesMain.User;
 import FeaturesMain.UserDataBase;
@@ -109,4 +112,30 @@ public class AdminUserManagementSteps {
 		assertTrue("Test failed: Active clients not displayed correctly.", activeClients >= 0);
 		assertTrue("Test failed: Active instructors not displayed correctly.", activeInstructors >= 0);
 	}
+
+	@Given("there is a pending instructor registration request with id {string}")
+	public void there_is_a_pending_instructor_registration_request_with_id(String id) {
+		boolean pendingAdded = UserDataBase.addPendingInstructor(id, "Test Instructor", "Instructor");
+		assertTrue("Test failed: Pending instructor registration request not added.", pendingAdded);
+	}
+
+	@When("I reject the registration request")
+	public void i_reject_the_registration_request() {
+		boolean rejected = UserDataBase.rejectInstructorRequest("2342004");
+		assertTrue("Test failed: Instructor registration request not rejected.", rejected);
+	}
+
+	@Then("the instructor account should be removed from the pending list")
+	public void the_instructor_account_should_be_removed_from_the_pending_list() {
+		ArrayList<User> pendingInstructors = UserDataBase.getPendingInstructors();
+		boolean instructorExists = false;
+		for (User instructor : pendingInstructors) {
+			if (instructor.getID().equals("2342004")) {
+				instructorExists = true;
+				break;
+			}
+		}
+		assertFalse("Test failed: Instructor registration request still exists in the pending list.", instructorExists);
+	}
+
 }

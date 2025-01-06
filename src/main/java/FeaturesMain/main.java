@@ -184,7 +184,7 @@ public class main {
 			deactivateUser(scanner);
 			break;
 		case 4:
-			approveNewInstrucotr(scanner);
+			approveOrRejectInstructor(scanner);
 			break;
 		case 5:
 			monitorUserActivity();
@@ -198,19 +198,37 @@ public class main {
 		}
 	}
 
-	private static void approveNewInstrucotr(Scanner scanner) {
+	private static void approveOrRejectInstructor(Scanner scanner) {
+		if (UserDataBase.getPendingInstructors().isEmpty()) {
+			System.out.println("No new applications.");
+			return;
+		}
+
 		System.out.println("\n--- Pending Instructor Registrations ---");
 		for (User instructor : UserDataBase.getPendingInstructors()) {
 			System.out.println("ID: " + instructor.getID() + " - Name: " + instructor.getName());
 		}
 
-		System.out.print("Enter the ID of the instructor to approve: ");
+		System.out.print("Enter the ID of the instructor to approve or reject: ");
 		String instructorID = scanner.nextLine();
 
-		if (UserDataBase.approveInstructorRequest(instructorID)) {
-			System.out.println("Instructor with ID " + instructorID + " has been approved.");
+		System.out.print("Enter your choice (approve/reject): ");
+		String choice = scanner.nextLine().toLowerCase();
+
+		if (choice.equals("approve")) {
+			if (UserDataBase.approveInstructorRequest(instructorID)) {
+				System.out.println("Instructor with ID " + instructorID + " has been approved.");
+			} else {
+				System.out.println("Instructor with ID " + instructorID + " not found in pending list.");
+			}
+		} else if (choice.equals("reject")) {
+			if (UserDataBase.rejectInstructorRequest(instructorID)) {
+				System.out.println("Instructor with ID " + instructorID + " has been rejected.");
+			} else {
+				System.out.println("Instructor with ID " + instructorID + " not found in pending list.");
+			}
 		} else {
-			System.out.println("Instructor with ID " + instructorID + " not found in pending list.");
+			System.out.println("Invalid choice. Please enter 'approve' or 'reject'.");
 		}
 	}
 
