@@ -42,7 +42,7 @@ The project was developed by first defining user stories and behaviors in Gherki
 1. Clone the Repository:
 ```
 git clone https://github.com/AlaaArmoush/Fitness-Management-System.git
-cd fitness-management-system-backend
+cd cd Fitness-Management-System
 ```
 
 2. Build the Project: Use Maven to compile and run tests:
