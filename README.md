@@ -11,6 +11,7 @@ The system supports three distinct user roles:
 - Admin: Manage users, programs, content, subscriptions, and monitor overall activity. 🛠️
 - Instructor: Create and manage fitness programs, interact with clients, and track client progress. 🏋️‍♂️
 - Client: Authenticate, create and manage profiles, explore fitness programs, track progress, and provide feedback. 🏃‍♀️
+
 Developed with an iterative Agile workflow, the project follows a Gherkin-first approach—defining features in plain language (see the attached Gherkin feature files) before implementing tests and code. This approach ensured all requirements were captured early and validated via automated tests. 
 ## Features
 
